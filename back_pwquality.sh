@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source common.sh
+source "${SHARE_DIR_ROOT}/common.sh"
 
 _mk_pwquality_conf() {
 	local failed=0
