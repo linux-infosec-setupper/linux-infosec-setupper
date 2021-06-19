@@ -1,19 +1,7 @@
 #!/bin/bash
 set -e
-DESTDIR="${DESTDIR:-}"
-PWQUALITY_CONF_FILE="${DESTDIR}/etc/security/pwquality.conf"
-INTERNAL_DIR='/var/lib/linux-infosec-setupper'
 
-_check_argument() {
-	case "$1" in
-	
-	if [[ "$1" == [0-9]* ]]; then
-		return 0
-	else
-		printf $"Argument to %s must be a number" "$2"
-		return 1
-	fi
-}
+source common.sh
 
 _mk_pwquality_conf() {
 	local difok=1 \
