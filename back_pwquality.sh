@@ -27,9 +27,15 @@ _mk_pwquality_conf() {
 	while [ -n "$1" ]; do
 		case "$1" in
 			--difok) shift;
-				 _check_argument "$1" "--difok"
-				 ;;
-			--minlen)
+				 _check_argument_is_number "$1" "--difok"
+		;;
+			--minlen) shift;
+				  _check_argument_value "$1" "6" "--minlen"
+		;;
+			--dcredit) shift;
+				   _check_argument_is_number "$1" "--dcredit" "-"		   
+		;;
 		 esac
 	 done
- }
+}
+_mk_pwquality_conf --dcredit -1
