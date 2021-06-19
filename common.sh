@@ -32,7 +32,7 @@ _check_argument_is_number() {
 # $1 - value
 # $2 - param name
 _check_argument_value() {
-	if [[ "$1" < "$2" ]]; then
+	if (( "$1" < "$2" )); then
 		error $"Argument to %s must be greater than %s" "$2" "$3"
 		return 1
 	else
