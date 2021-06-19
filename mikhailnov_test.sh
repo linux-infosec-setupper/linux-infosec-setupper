@@ -33,6 +33,8 @@ _main(){
     _mk_auditd_config || { echo failed test 5; failed="$((++failed))"; }
     [ "$(md5sum "${VAR_DIR_AUDIT}/auditd-conf.sh" | awk '{print $1}')" = 650f41086f25b6c0736bdc0323ca6267 ] || { echo failed test 6; failed="$((++failed))"; }
     ! _mk_auditd_config --local_events xuy || { echo failed test 7; failed="$((++failed))"; }
+    _mk_auditd_config --systemd-firewalling-params "--IPAddressDeny any --IPAddressAllow 192.168.10.1/24 --IPAddressAllow 192.168.20.1" || { echo failed test 8; failed="$((++failed))"; }
+    [ "$(md5sum "${DESTDIR}"/etc/systemd/system/auditd.service.d/90-linux-infosec-setupper-auditd-firewall.conf | awk '{print $1}')" = 27f8c93280d21e8b0d4b399ac234b663 ] || { echo failed test 9; failed="$((++failed))"; }
 }
 
 _main

@@ -40,6 +40,8 @@ _audit_action_config(){
 _mk_systemd_auditd_override(){
 	local do_verify=1
 	if [ -z "$DESTDIR" ]; then do_verify=0; fi
+	# auditd.service: Command /sbin/auditd is not executable: Permission denied
+	if [ "$(id -u)" -ne 0 ] ; then do_verify=0; fi
 	# --IPAddressAllow=xxx --IPAddressDeny=xxx may be specified multiple times
 	local IPAddressAllow=""
 	local IPAddressDeny=""
@@ -96,7 +98,7 @@ EOF
 		fi
 	fi
 	if [ "$do_verify" = 1 ]; then
-		local systemd_analyze_result="$(systemd-analyze verify "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" 2>&1)"
+		local systemd_analyze_result="$(systemd-analyze verify auditd.service 2>&1)"
 		if [ $? != 0 ]; then
 			error $"Systemd unit file auditd.service with setted up packet filtering has not passed verification!"
 			error $"The error was:"
@@ -409,7 +411,7 @@ _mk_auditd_config(){
 			# https://listman.redhat.com/archives/linux-audit/2019-April/msg00110.html
 
 			"--systemd-firewalling-params" ) shift;
-				_mk_systemd_auditd_override "$1"
+				_mk_systemd_auditd_override $*
 				shift
 			;;
 		esac
