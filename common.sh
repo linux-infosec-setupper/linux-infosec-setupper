@@ -1,7 +1,12 @@
 # prefix for testing
 DESTDIR="${DESTDIR:-}"
 PWQUALITY_CONF_FILE="${DESTDIR}/etc/security/pwquality.conf"
-INTERNAL_DIR="${DESTDIR}/var/lib/linux-infosec-setupper"
+VAR_DIR_ROOT="${DESTDIR}/var/lib/linux-infosec-setupper"
+VAR_DIR_PWQUALITY="${VAR_DIR_ROOT}/pwquality"
+VAR_DIR_AUDIT="${VAR_DIR_ROOT}/audit"
+SHARE_DIR_ROOT="${DESTDIR}/usr/share/linux-infosec-setupper"
+SHARE_DIR_PWQUALITY="${SHARE_DIR_ROOT}/pwquality"
+SHARE_DIR_AUDIT="${SHARE_DIR_ROOT}/audit"
 # /etc/audit/audit.rules is generated automatically from /etc/audit/rules.d/*,
 # do not edit it; also do not edit any other files, work only with ours,
 # assume that there are no other configs or they have lower priority
