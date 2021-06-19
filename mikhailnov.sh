@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-. common.sh
+
+source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh" # || . ./common.sh
 
 # $1 - action
 # $2 - param name

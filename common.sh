@@ -21,6 +21,10 @@ error() {
 	echo '' 1>&2
 }
 
+# Translations
+TEXTDOMAIN=linux-infosec-setupper
+TEXTDOMAINDIR=/usr/share/locale
+
 # $1 - value
 # $2 - param name
 # (optional) $3 - anything, trigger check for non-negative

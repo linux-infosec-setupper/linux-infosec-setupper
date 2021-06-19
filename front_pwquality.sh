@@ -21,7 +21,15 @@ for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforc
 	# The variables have the same name as the lines in the config
 	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
 done
-var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies setup" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 --button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
+var="$(yad --title=$"linux-infosec-setupper" --form \
+	--text-align=center \
+	--bool-fmt=T \
+	--text=$"<span size='xx-large' weight='bold'>Password policies setup</span>" \
+	--image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png \
+	--scroll \
+	--width=800 \
+	--height=800 \
+	--button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
 	--field=$"Number of characters in the new password that must not be present in the old password::LBL" "!" \
 	  --field=$"Value (difok)::NUM" "$difok!1..9999!1" \
 	--field=$"Minimum acceptable size for the new password:LBL" "!" \

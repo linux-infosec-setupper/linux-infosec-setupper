@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source "${SHARE_DIR_ROOT}/common.sh"
+source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
 
 _mk_pwquality_conf() {
 	local failed=0
@@ -149,3 +149,4 @@ EOF
 if [ "$enforce_for_root" == 1 ]; then echo "enforce_for_root"; fi
 if [ "$local_users_only" == 1 ]; then echo "local_users_only"; fi
 }
+_mk_pwquality_conf --gecoscheck 3
