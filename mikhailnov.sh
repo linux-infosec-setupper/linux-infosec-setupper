@@ -7,24 +7,77 @@ _is_auditd_enabled(){
 	systemctl is-active -q autitd
 }
 
-_mk_auditd_config(){
-	local failed=0
-	local local_events="yes"
-	local log_file="/var/log/audit/audit.log"
-	local write_logs="yes"
-	local log_format="ENRICHED"
-	local log_group="root"
-	local priority_boost="4"
-	local flush="incremental_async"
-	local freq=""
-	local max_log_fileaction="rotate"
-	local num_logs=3
+# $1 - action
+# $2 - param name
+_audit_action_config(){
+	local l_failed=0
+	case "$1" in
+		ignore ) : ;;
+		syslog ) : ;;
+		rotate ) : ;;
+		email ) : ;;
+		suspend ) : ;;
+		single ) : ;;
+		halt ) : ;;
+		exec* )
+			if [[ "$1" =~ ^exec([[:space:]])*$ ]]; then
+				error $"Entered %s=exec /path/to/script does not contain a path to script" "$2"
+				l_failed=1
+			elif [ "$(echo "$1" | tr '[:space:]' '\n' | wc -l)" != 2 ]; then
+				error $"%s=exec* can have only one agrument — path to script, example: %s=exec /path/to/script" "$2" "$2"
+				l_failed=1
+			else
+				local path_to_script="$(echo "$1" | awk '{print $2}')"
+				if ! test -x "$path_to_script"; then
+					error $"Script %s is not executable" "$path_to_script"
+					l_failed=1
+				fi
+			fi
+		;;
+		* )
+			error $"Possible values of %s are: %s" "exec" "ignore, syslog, rotate, email, exec /path/to/script, suspend, single, halt"
+			l_failed=1
+		;;
+	esac
+	return "$l_failed"
+}
+
+# can be used to reset variables to default values after loading previously setted up ones
+_audit_variables(){
+	failed=0
+	local_events="yes"
+	log_file="/var/log/audit/audit.log"
+	write_logs="yes"
+	log_format="ENRICHED"
+	log_group="root"
+	priority_boost="4"
+	flush="incremental_async"
+	freq=""
+	max_log_fileaction="rotate"
+	num_logs=3
 	# default is lossy, but let's better prevent potential loss of audit events
-	local disp_qos="lossless"
+	disp_qos="lossless"
 	# XXX why does audispd not exist in Fedora and Red OS 7.3? It exists in rosa2019.1
-	local dispatcher=""
+	dispatcher=""
+	distribute_network="no"
 	# default is "none", but let's make logs better parsable and readable, e.g. on syslog server
-	local name_format="hostname"
+	name_format="hostname"
+	name=""
+	max_log_file=8
+	action_mail_acct=""
+	space_left="10%"
+	# log if free space is low but still enough,
+	# Zabbix etc. can be used to make notification in such case
+	space_left_action="syslog"
+	# poweroff system if logs cannot be stored according to configured policy (paranoidal)
+	disk_full_action="halt"
+	disk_error_action="halt"
+	tcp_listen_port=""
+	tcp_max_per_addr=""
+}
+
+_mk_auditd_config(){
+	_audit_variables
 	# Bellow we go through all cli options and print all errors,
 	# not failing on the first one, showing all errors to the user
 	while [ -n "$1" ]
@@ -161,10 +214,22 @@ _mk_auditd_config(){
 						failed=1
 					fi
 					dispatcher="$1"
+					shift
 				else
 					failed=1
 				fi
 			;;
+			"--distribute_network" )
+				if [ -n "$dispatcher" ]
+				then
+					_check_argument_is_boolean "$1" "distribute_network" || failed=1
+				else
+					error $"%s requires %s to be configured" "distribute_network" "dispatcher"
+					failed=1
+				fi
+				distribute_network="$1"
+				shift
+			;;	
 			"--name_format" )
 				if _check_argument_is_string "$1" "name_format"
 				then
@@ -185,7 +250,97 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
+			"--name" )
+				if [ "$name_format" != "user" ]
+				then
+					error $"Parameter %s makes sense only when %s" "name" "name_format != user"
+					failed=1
+				else
+					name="$1"
+					shift
+				fi
+			;;
+			"--max_log_file" )
+				_check_argument_is_non_negative_number "$1" "max_log_file" || failed=1
+				max_log_file="$1"
+				shift
+			;;
+			"--action_mail_acct" )
+				_validate_email "$1" || failed=1
+				action_mail_acct="$1"
+				shift
+			;;
+			"--space_left" )
+				local tmp_space_left="$1"
+				# last character of string (https://stackoverflow.com/a/21635778)
+				if [ "${tmp_space_left: -1}" = "%" ]; then
+					tmp_space_left="$(echo "$tmp_space_left" | sed -e 's,%$,,')"
+					_check_argument_is_non_negative_number "$tmp_space_left" "space_left" || failed=1
+				fi
+				_check_argument_is_non_negative_number "$space_left" "space_left" || failed=1
+				space_left="$1"
+				shift
+				unset tmp_space_left
+			;;
+			"--space_left_action" )
+				if ! _audit_action_config "$1" "space_left_action" ; then
+					failed=1
+				fi
+				space_left_action="$1"
+				shift
+			;;
+			"--disk_full_action" )
+				if ! _audit_action_config "$1" "disk_full_action" ; then
+					failed=1
+				fi
+				disk_full_action="$1"
+				shift
+			;;
+			"--disk_error_action" )
+				if ! _audit_action_config "$1" "disk_error_action" ; then
+					failed=1
+				fi
+				disk_error_action="$1"
+				shift
+			;;
+			# TODO: admin_space_left
+			# TODO: admin_space_left_action
+			# + compare with space_left, must be less according to the manual
 
+			# auditd can use tcp_wrappers, but it is a vulnerable, depreceated and not secure mechanism;
+			# we will not configure tcp_wrappers, instead we will configure list of allowed and disallowed
+			# IP addresses via systemd (http://0pointer.net/blog/ip-accounting-and-access-lists-with-systemd.html)
+			# Working as an audit server (listening a port) is disabled by default
+			"--tcp_listen_port" )
+				if _check_argument_is_non_negative_number "$1" "tcp_listen_port"
+				then
+					# 1..65535
+					if [ "$1" -lt 1 ] || [ "$1" -gt 65535 ]; then
+						error $"%s must be an integer between %s and %s" "tcp_listen_port" 1 65535
+						failed=1
+					fi
+				else
+					failed=1
+				fi
+				tcp_listen_port="$1"
+			;;
+			"--tcp_max_per_addr" )
+				if _check_argument_is_non_negative_number "$1" "tcp_max_per_addr"
+				then
+					# 1..65535
+					if [ "$1" -lt 1 ] || [ "$1" -gt 1024 ]; then
+						error $"%s must be an integer between %s and %s" "tcp_listen_port" 1 1024
+						failed=1
+					fi
+				else
+					failed=1
+				fi
+				tcp_max_per_addr="$1"
+			;;
+			# TODO: tcp_client_ports
+			# TODO: tcp_client_max_idle
+			# TODO: kerberos authentication against a Kerberos/Samba/FreeIPA server
+			# https://listman.redhat.com/archives/linux-audit/2019-April/msg00110.html
 		esac
 		if [ "$failed" != 0 ]; then
 			error $"Errors occured when trying to understand how to configure auditd"
