@@ -7,31 +7,6 @@ _is_auditd_enabled(){
 	systemctl is-active -q autitd
 }
 
-# $1 - value
-# $2 - param name
-_auditd_conf_is_boolean(){
-	case "$1" in
-		"yes" ) return 0 ;;
-		"no" ) return 0 ;;
-		"" )
-			error $"Value of %s is empty, set yes or no" "$2"
-		;;
-		* )
-			error $"String %s is not a boolean, set yes or no" "$1"
-		;;
-	esac
-}
-
-# $1 - value
-# $2 - param name
-_auditd_conf_is_non_negative_number(){
-	# 2>/dev/null to avoid odd output if $1 is not a number
-	if ! test "$1" -lt 0 2>/dev/null; then
-		error $"Value of %s must be a non-negative number" "$2"
-		return 1
-	fi
-}
-
 _mk_auditd_config(){
 	local failed=0
 	local local_events="yes"
@@ -56,7 +31,7 @@ _mk_auditd_config(){
 	do
 		case "$1" in
 			"--local_events" )
-				_auditd_conf_is_boolean "$1" "local_events" || failed=1
+				_check_argument_is_boolean "$1" "local_events" || failed=1
 				local_events="$1"
 				shift
 			;;
@@ -78,7 +53,7 @@ _mk_auditd_config(){
 				fi
 			;;
 			"--write_logs" )
-				_auditd_conf_is_boolean "$1" "write_logs"  || failed=1
+				_check_argument_is_boolean "$1" "write_logs"  || failed=1
 				write_logs="$1"
 				shift
 			;;
@@ -100,7 +75,7 @@ _mk_auditd_config(){
 				shift
 			;;
 			"--priority_boost" )
-				_auditd_conf_is_non_negative_number "$1" "priority_boost" || failed=1
+				_check_argument_is_non_negative_number "$1" "priority_boost" || failed=1
 				priority_boost="$1"
 				shift
 			;;
@@ -122,7 +97,7 @@ _mk_auditd_config(){
 			;;
 			"--freq" )
 				if [ "$flush" = "incremental_async" ]; then
-					_auditd_conf_is_non_negative_number "$1" "freq" || failed=1
+					_check_argument_is_non_negative_number "$1" "freq" || failed=1
 					freq="$1"
 					shift
 				else
@@ -156,7 +131,7 @@ _mk_auditd_config(){
 					error $"Parameter %s makes sense only when %s" "num_logs" "max_log_file_action=rotate"
 					failed=1
 				else
-					_auditd_conf_is_non_negative_number "$1" "num_logs" || failed=1
+					_check_argument_is_non_negative_number "$1" "num_logs" || failed=1
 					num_logs="$1"
 					shift
 				fi
