@@ -24,6 +24,9 @@ _main(){
 	fi
 	_mk_pwquality_conf --usercheck 1 1>/dev/null || { echo failed test 2 && failed="$((++failed))" ;}
 	! _mk_pwquality_conf --enforcing 1 --retry --usersubstr 1>/dev/null || { echo failed test 3 && failed="$((++failed))" ;}
+	_mk_pwquality_conf --ucredit -3 || { echo failed test 3 && failed="$((++failed))" ;}
+	_mk_pwquality_conf --ucredit 3 || { echo failed test 3 && failed="$((++failed))" ;}
+	_mk_pwquality_conf --ucredit +3 || { echo failed test 3 && failed="$((++failed))" ;}
 }
 
 _main
