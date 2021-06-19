@@ -8,7 +8,7 @@ if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
 fi	
 
 source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
-while read -r line; do declare "$line"; done < <(_pw_parse_conf) || { error $"Unable to parse /etc/security/pwquality.conf correctly"; exit 1; }
+while read -r line; do declare "$line" || { error $"Unable to parse /etc/security/pwquality.conf correctly; execute \n%s" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
 
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
 	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
