@@ -1,29 +1,21 @@
 #!/bin/bash
 
-minlen=8
-dcredit=0
-ucredir=0
-lcredit=0
-ocredit=0
-minclass=0
-maxrepeat=0
-maxsequence=0
-maxclassrepeat=0
-gecoscheck=0
-dictcheck=1
-usercheck=1
-usersubstr=0
-enforcing=1
-retry=1
-enforce_for_root=0
-local_users_only=0
+source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
+
+if ! [[ -f "${DESTDIR}/var/lib/linux-infosec-setupper/pw/pw_changed" ]]; then
+	cat "${DESTDIR}/usr/share/linux-infosec-setupper/pw/pw_default" > "${DESTDIR:-}/etc/security/pwquality.conf"
+	install -D -m 000 /dev/null "${DESTDIR:-}/var/lib/linux-infosec-setupper/pw/pw_changed"
+fi	
+
+source "${DESTDIR}/usr/share/linux-infosec-setupper/pw/parse_pwquality.sh"
+while read -r line; do declare "$line"; done < <(_pw_parse_conf) || { error $"Unable to parse /etc/security/pwquality.conf correctly"; exit 1; }
 
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
-	eval 'if [[ $'$i' == 0 ]]; then declare $i=FALSE; else declare $i=TRUE; fi'
+	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
 done
-var="$(yad --title="linux-infosec-setupper" --form --text="Настройки политики паролей" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 \
+var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies setup" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 \
 	--field=$"Number of characters in the new password that must not be present in the old password::LBL" "!" \
-	  --field=$"Value (difok)::NUM" "1" \
+	  --field=$"Value (difok)::NUM" "$difok!1..9999!1" \
 	--field=$"Minimum acceptable size for the new password:LBL" "!" \
 	  --field=$"Value (minlen):NUM" "$minlen!6..9999!1" \
 	--field=$"The maximum credit for having digits in the new password::LBL" "!" \
@@ -58,6 +50,7 @@ var="$(yad --title="linux-infosec-setupper" --form --text="Настройки п
 	  --field=$"Status (enforce_for_root):CHK" "$enforce_for_root" \
 	--field=$"Not test the password quality for users that are not present in /etc/passwd:LBL" "!" \
 	--field=$"Status (local_users_only):CHK" "$local_users_only")"
+[ -z "$var" ] && exit 0
 
 var2="$(while read -rd '|' line; do
 	echo $line
@@ -83,4 +76,4 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 source back_pwquality.sh
-_mk_pwquality_conf $var2
+_mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf"
