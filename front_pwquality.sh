@@ -2,15 +2,23 @@
 
 source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
 
+# Check whether we are running the script for the first time
+# Since the config may be standard from the package, it may not be parsed correctly.
+# We write our default config instead of the original one, so that the parsing works correctly
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
 	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
 	install -D -m 000 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed"
 fi	
 
 source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
+# In case the config was changed manually, or there were errors in it,
+# we check whether everything can be parsed correctly, and if not, it outputs an error
 while read -r line; do declare "$line" || { error $"Unable to parse /etc/security/pwquality.conf correctly; execute \n%s" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
 
+# For yad checkboxes, the words TRUE or FALSE are required.
+# We change the following parameters 0 to FALSE and 1 to TRUE
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
+	# The variables have the same name as the lines in the config
 	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
 done
 var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies setup" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 --button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
@@ -51,12 +59,17 @@ var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies s
 	--field=$"Not test the password quality for users that are not present in /etc/passwd:LBL" "!" \
 	--field=$"Status (local_users_only):CHK" "$local_users_only")"
 	_status="$?"
+
+# If we clicked on the "Load default" button, we decided to restore the settings.
+# The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
 	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
 fi	
 
+# If we decide to undo the changes and not change anything, the var variable will be empty.
 [ -z "$var" ] && exit 0
 
+# The default delimiter in yad is |
 var2="$(while read -rd '|' line; do
 	echo $line
 done <<<"$var" | sed '/^$/d' | \

@@ -145,6 +145,7 @@ usersubstr = $usersubstr
 enforcing = $enforcing
 retry = $retry
 EOF
+# These parameters do not have keys (numbers after the = sign), so we work with them in a different way
 if [ "$enforce_for_root" == 1 ]; then echo "enforce_for_root"; fi
 if [ "$local_users_only" == 1 ]; then echo "local_users_only"; fi
 }
