@@ -17,6 +17,9 @@ _check_argument_is_number() {
 	if [[ "$1" == [0-9]* ]]; then
 		return 0
 	else
+		if [ -n "$3" ]; then
+			grep -Exq -- "(\-|\+)[0-9]*" <<< "$1" && return 0
+		fi
 		error $"Argument to %s must be a number" "$2"
 		return 1
 	fi
