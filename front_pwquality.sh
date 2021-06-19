@@ -2,18 +2,18 @@
 
 source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
 
-if ! [[ -f "${DESTDIR}/var/lib/linux-infosec-setupper/pw/pw_changed" ]]; then
-	cat "${DESTDIR}/usr/share/linux-infosec-setupper/pw/pw_default" > "${DESTDIR:-}/etc/security/pwquality.conf"
-	install -D -m 000 /dev/null "${DESTDIR:-}/var/lib/linux-infosec-setupper/pw/pw_changed"
+if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
+	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
+	install -D -m 000 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed"
 fi	
 
-source "${DESTDIR}/usr/share/linux-infosec-setupper/pw/parse_pwquality.sh"
+source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
 while read -r line; do declare "$line"; done < <(_pw_parse_conf) || { error $"Unable to parse /etc/security/pwquality.conf correctly"; exit 1; }
 
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
 	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
 done
-var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies setup" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 \
+var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies setup" --image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png --scroll --width=800 --height=800 --button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
 	--field=$"Number of characters in the new password that must not be present in the old password::LBL" "!" \
 	  --field=$"Value (difok)::NUM" "$difok!1..9999!1" \
 	--field=$"Minimum acceptable size for the new password:LBL" "!" \
@@ -50,6 +50,11 @@ var="$(yad --title=$"linux-infosec-setupper" --form --text=$"Password policies s
 	  --field=$"Status (enforce_for_root):CHK" "$enforce_for_root" \
 	--field=$"Not test the password quality for users that are not present in /etc/passwd:LBL" "!" \
 	--field=$"Status (local_users_only):CHK" "$local_users_only")"
+	_status="$?"
+if [ "$_status" == 3 ]; then
+	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
+fi	
+
 [ -z "$var" ] && exit 0
 
 var2="$(while read -rd '|' line; do
@@ -76,5 +81,5 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 
-source "${DESTDIR}/usr/share/linux-infosec-setupper/pw/back_pwquality.sh"
+source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
 _mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf"
