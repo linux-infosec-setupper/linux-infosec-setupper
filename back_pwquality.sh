@@ -78,19 +78,19 @@ _mk_pwquality_conf() {
 		;;
 			--gecoscheck) shift;
 				_check_argument_is_number "$1" "--gecoscheck" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				geoscheck="$1"
 				shift
 		;;
 			--dictcheck) shift;
 				_check_argument_is_number "$1" "--dictcheck" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				dickcheck="$1"
 				shift
 		;;
 			--usercheck) shift;
 				_check_argument_is_number "$1" "--usercheck" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				usercheck="$1"
 				shift
 		;;
@@ -101,7 +101,7 @@ _mk_pwquality_conf() {
 		;;
 			--enforcing) shift;
 				_check_argument_is_number "$1" "--enforcing" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				enforcing="$1"
 				shift
 		;;
@@ -111,20 +111,19 @@ _mk_pwquality_conf() {
 		;;
 			--enforce_for_root) shift;
 				_check_argument_is_number "$1" "--enforce_for_root" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				enforce_for_root="$1"
 				shift
 		;;
 			--local_users_only) shift;
 				_check_argument_is_number "$1" "--local_users_only" || failed=1
-				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
 				local_users_only="$1"
 				shift
 		;;
 		esac
 	done
 	if [ "$failed" != 0 ]; then
-		error $"Errors occured when trying to understand how to configure auditd"
 		return 1
 	fi
 cat <<EOF
@@ -145,6 +144,6 @@ usersubstr = $usersubstr
 enforcing = $enforcing
 retry = $retry
 EOF
-if [ "$enforce_for_root" = 1 ]; then echo "enforce_for_root"; fi
-if [ "$local_users_only" = 1 ]; then echo "local_users_only"; fi
+if [ "$enforce_for_root" == 1 ]; then echo "enforce_for_root"; fi
+if [ "$local_users_only" == 1 ]; then echo "local_users_only"; fi
 }
