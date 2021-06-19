@@ -2,12 +2,14 @@
 
 source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
 
+PWQUALITY_FRONT=1
+
 # Check whether we are running the script for the first time
 # Since the config may be standard from the package, it may not be parsed correctly.
 # We write our default config instead of the original one, so that the parsing works correctly
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
-	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
-	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed"
+	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
 fi	
 
 source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
@@ -19,13 +21,13 @@ while read -r line; do declare "$line" || { error $"Unable to parse /etc/securit
 # We change the following parameters 0 to FALSE and 1 to TRUE
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
 	# The variables have the same name as the lines in the config
-	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi'
+	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { error $"Unable to set variable %s" "$i"; exit 1; }
 done
 var="$(yad --title=$"linux-infosec-setupper" --form \
 	--text-align=center \
 	--bool-fmt=T \
 	--text=$"<span size='xx-large' weight='bold'>Password policies setup</span>" \
-	--image=/usr/share/icons/hicolor/48x48/apps/gcr-key.png \
+	--image=gcr-key \
 	--scroll \
 	--width=800 \
 	--height=800 \
@@ -71,7 +73,7 @@ var="$(yad --title=$"linux-infosec-setupper" --form \
 # If we clicked on the "Load default" button, we decided to restore the settings.
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
-	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
+	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 fi	
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
@@ -103,4 +105,4 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 
 source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
-_mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf"
+_mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }

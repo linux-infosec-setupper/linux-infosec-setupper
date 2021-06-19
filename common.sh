@@ -17,7 +17,7 @@ AUDIT_DAEMON_SYSTEMD_OVERRIDE="${DESTDIR}/etc/systemd/system/auditd.service.d/90
 REGEX_EMAIL="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
 error() {
-	printf "$@" 1>&2
+	printf -- "$@" 1>&2
 	echo '' 1>&2
 }
 
