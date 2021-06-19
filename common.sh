@@ -7,7 +7,8 @@ INTERNAL_DIR="${DESTDIR}var/lib/linux-infosec-setupper"
 # assume that there are no other configs or they have lower priority
 AUDIT_RULES_FILE=${DESTDIR}etc/audit/rules.d/90-linux-infosec-setupper.rules
 AUDIT_DAEMON_CONFIG=${DESTDIR}etc/audit/auditd.conf
-
+# validate email, https://stackoverflow.com/a/2138832, https://stackoverflow.com/a/41192733
+REGEX_EMAIL="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
 error() {
 	printf "$@" 1>&2
@@ -72,6 +73,13 @@ _check_argument_is_non_negative_number(){
 	# 2>/dev/null to avoid odd output if $1 is not a number
 	if ! test "$1" -lt 0 2>/dev/null; then
 		error $"Value of %s must be a non-negative number" "$2"
+		return 1
+	fi
+}
+
+_validate_email(){
+	if ! [[ "$1" =~ ${regex_email} ]] ; then
+		error $"%s is not a correct email" "$1"
 		return 1
 	fi
 }
