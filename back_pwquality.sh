@@ -75,6 +75,7 @@ _mk_pwquality_conf() {
 			--maxclassrepeat) shift;
 				_check_argument_is_number "$1" "--maxclassrepeat" || failed=1
 				maxclassrepeat="$1"
+				shift
 		;;
 			--gecoscheck) shift;
 				_check_argument_is_number "$1" "--gecoscheck" || failed=1
@@ -85,7 +86,7 @@ _mk_pwquality_conf() {
 			--dictcheck) shift;
 				_check_argument_is_number "$1" "--dictcheck" || failed=1
 				[[ "$1" =~ (0|1) ]] || { error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"; failed=1; }
-				dickcheck="$1"
+				dictcheck="$1"
 				shift
 		;;
 			--usercheck) shift;
