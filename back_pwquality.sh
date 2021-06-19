@@ -88,9 +88,13 @@ _mk_pwquality_conf() {
 				shift
 		;;
 			--usercheck) shift;
+				echo 1
 				_check_argument_is_number "$1" "--usercheck"
+				echo 2
 				[[ "$1" =~ (0|1) ]] || error $"The received parameters are not correct. Expected %s, received %s" $"0 or 1" "$1"
+				echo 3
 				usercheck="$1"
+				echo 4
 				shift
 		;;
 			--usersubstr) shift;
