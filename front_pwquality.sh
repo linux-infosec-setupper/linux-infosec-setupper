@@ -75,5 +75,6 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;16s/^/--enforcing /
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
-source back_pwquality.sh
+
+source "${DESTDIR}/usr/share/linux-infosec-setupper/pw/back_pwquality.sh"
 _mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf"
