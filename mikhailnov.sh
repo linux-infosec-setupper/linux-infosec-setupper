@@ -42,6 +42,68 @@ _audit_action_config(){
 	return "$l_failed"
 }
 
+_mk_systemd_auditd_override(){
+	local do_verify=1
+	if [ -z "$DESTDIR" ]; then do_verify=0; fi
+	# --IPAddressAllow=xxx --IPAddressDeny=xxx may be specified multiple times
+	local IPAddressAllow=""
+	local IPAddressDeny=""
+	while [ -n "$1" ]
+	do
+		case "$1" in
+			"--verify-disable" )
+				do_verify=0
+			;;
+			"--IPAddressAllow" )
+				shift
+				IPAddressAllow="${IPAddressAllow} $1"
+			;;
+			"--IPAddressDeny" )
+				shift
+				IPAddressDeny="${IPAddressDeny} $1"
+			;;
+		esac
+		shift
+	done
+	local systemd_override_dir="$(dirname "$AUDIT_DAEMON_SYSTEMD_OVERRIDE")"
+	if ! mkdir -p "$systemd_override_dir" ; then
+		error $"Error creating directory %s" "$systemd_override_dir"
+		return 1
+	fi
+	cat > "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" << EOF
+[Service]
+$(for i in $IPAddressAllow
+do
+	echo "IPAddressAllow=$i"
+done)
+$(for i in $IPAddressDeny
+do
+	echo "IPAddressDeny=$i"
+done)
+EOF
+	# Make it work inside e.g. Anaconda module where $DESTDIR is not empty
+	# probably by copying the file to the root of the LiveCD.
+	# Detection of being run from Anaconda here is a prototype.
+	if [ "${I_AM_ANACONDA:-0}" != 0 ]; then
+		local cp_dst="$(echo "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" | sed -e "s,^${DESTDIR},,")"
+		if cp "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" "$cp_dst"
+		then
+			do_verify=1
+		else
+			error $"Error copying systemd override file %s to %s" "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" "$cp_dst"
+			return 1
+		fi
+	fi
+	if [ "$do_verify" = 1 ]; then
+		local systemd_analyze_result="$(systemd-analyze verify "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" 2>&1)"
+		if [ $? != 0 ]; then
+			error $"Systemd unit file auditd.service with setted up packet filtering has not passed verification!"
+			error $"The error was:"
+			error "$systemd_analyze_result"
+		fi
+	fi
+}
+
 # can be used to reset variables to default values after loading previously setted up ones
 _audit_variables(){
 	failed=0
@@ -341,7 +403,13 @@ _mk_auditd_config(){
 			# TODO: tcp_client_max_idle
 			# TODO: kerberos authentication against a Kerberos/Samba/FreeIPA server
 			# https://listman.redhat.com/archives/linux-audit/2019-April/msg00110.html
+
+			"--systemd-firewalling-params" )
+				shift
+				_mk_systemd_auditd_override "$1"
+			;;
 		esac
+		shift
 		if [ "$failed" != 0 ]; then
 			error $"Errors occured when trying to understand how to configure auditd"
 			return 1

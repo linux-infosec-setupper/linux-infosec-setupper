@@ -1,12 +1,13 @@
 # prefix for testing
 DESTDIR="${DESTDIR:-}"
-PWQUALITY_CONF_FILE="${DESTDIR}etc/security/pwquality.conf"
-INTERNAL_DIR="${DESTDIR}var/lib/linux-infosec-setupper"
+PWQUALITY_CONF_FILE="${DESTDIR}/etc/security/pwquality.conf"
+INTERNAL_DIR="${DESTDIR}/var/lib/linux-infosec-setupper"
 # /etc/audit/audit.rules is generated automatically from /etc/audit/rules.d/*,
 # do not edit it; also do not edit any other files, work only with ours,
 # assume that there are no other configs or they have lower priority
-AUDIT_RULES_FILE=${DESTDIR}etc/audit/rules.d/90-linux-infosec-setupper.rules
-AUDIT_DAEMON_CONFIG=${DESTDIR}etc/audit/auditd.conf
+AUDIT_RULES_FILE="${DESTDIR}/etc/audit/rules.d/90-linux-infosec-setupper.rules"
+AUDIT_DAEMON_CONFIG="${DESTDIR}/etc/audit/auditd.conf"
+AUDIT_DAEMON_SYSTEMD_OVERRIDE="${DESTDIR}/etc/systemd/system/auditd.service.d/90-linux-infosec-setupper-auditd-firewall.conf"
 # validate email, https://stackoverflow.com/a/2138832, https://stackoverflow.com/a/41192733
 REGEX_EMAIL="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
