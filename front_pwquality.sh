@@ -7,7 +7,7 @@ source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
 # We write our default config instead of the original one, so that the parsing works correctly
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
 	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf"
-	install -D -m 000 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed"
+	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed"
 fi	
 
 source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
