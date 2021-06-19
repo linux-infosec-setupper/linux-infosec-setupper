@@ -66,9 +66,11 @@ _check_argument_is_boolean(){
 		"no" ) return 0 ;;
 		"" )
 			error $"Value of %s is empty, set yes or no" "$2"
+			return 1
 		;;
 		* )
 			error $"String %s is not a boolean, set yes or no" "$1"
+			return 1
 		;;
 	esac
 }

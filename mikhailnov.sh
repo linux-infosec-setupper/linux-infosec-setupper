@@ -2,11 +2,6 @@
 set -e
 . common.sh
 
-_is_auditd_enabled(){
-	# may add additional checks later
-	systemctl is-active -q autitd
-}
-
 # $1 - action
 # $2 - param name
 _audit_action_config(){
@@ -71,6 +66,12 @@ _mk_systemd_auditd_override(){
 		return 1
 	fi
 	cat > "$AUDIT_DAEMON_SYSTEMD_OVERRIDE" << EOF
+[Unit]
+# change Before and After according to comments in auditd.service
+After=
+After=network-online.target local-fs.target systemd-tmpfiles-setup.service
+Before=
+Before=shutdown.target
 [Service]
 $(for i in $IPAddressAllow
 do
@@ -106,7 +107,6 @@ EOF
 
 # can be used to reset variables to default values after loading previously setted up ones
 _audit_variables(){
-	failed=0
 	local_events="yes"
 	log_file="/var/log/audit/audit.log"
 	write_logs="yes"
@@ -140,12 +140,13 @@ _audit_variables(){
 
 _mk_auditd_config(){
 	_audit_variables
+	local failed=0
 	# Bellow we go through all cli options and print all errors,
 	# not failing on the first one, showing all errors to the user
 	while [ -n "$1" ]
 	do
 		case "$1" in
-			"--local_events" )
+			"--local_events" ) shift;
 				_check_argument_is_boolean "$1" "local_events" || failed=1
 				local_events="$1"
 				shift
@@ -153,7 +154,7 @@ _mk_auditd_config(){
 			# We recommend using default /var/log/audit/audit.log to avoid mess
 			# with SELinux, log rotation (auditd rotates the log by itself by default
 			# but admins/distrobuilders may additionally setup logrotate.d
-			"--log_file" )
+			"--log_file" ) shift;
 				if _check_argument_is_string "$1" "log_file"
 				then
 					local dir="$(dirname "$1")"
@@ -167,12 +168,12 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--write_logs" )
+			"--write_logs" ) shift;
 				_check_argument_is_boolean "$1" "write_logs"  || failed=1
 				write_logs="$1"
 				shift
 			;;
-			"--log_format" )
+			"--log_format" ) shift;
 				if ! { [ "$1" = "ENRICHED" ] || [ "$1" = "RAW" ] ;}; then
 					error $"Value of %s must be %s or %s" "log_format" "ENRICHED" "RAW"
 					failed=1
@@ -180,7 +181,7 @@ _mk_auditd_config(){
 				log_format="$1"
 				shift
 			;;
-			"--log_group" )
+			"--log_group" ) shift;
 				_check_argument_is_string "$1" "log_group" || failed=1
 				# We could try to resolve the group here, but NSS (/etc/nsswitch.conf) may be
 				# not yet configured or a connection to a domain (FreeIPA, LDAP, AD etc.)
@@ -189,12 +190,12 @@ _mk_auditd_config(){
 				log_group="$1"
 				shift
 			;;
-			"--priority_boost" )
+			"--priority_boost" ) shift;
 				_check_argument_is_non_negative_number "$1" "priority_boost" || failed=1
 				priority_boost="$1"
 				shift
 			;;
-			"--flush" )
+			"--flush" ) shift;
 				_check_argument_is_string "$1" "flush" || failed=1
 				case "$1" in
 					none ) : ;;
@@ -210,7 +211,7 @@ _mk_auditd_config(){
 				flush="$1"
 				shift
 			;;
-			"--freq" )
+			"--freq" ) shift;
 				if [ "$flush" = "incremental_async" ]; then
 					_check_argument_is_non_negative_number "$1" "freq" || failed=1
 					freq="$1"
@@ -220,7 +221,7 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--max_log_fileaction" )
+			"--max_log_fileaction" ) shift;
 				if _check_argument_is_string "$1" "max_log_file_action"
 				then
 					case "$1" in
@@ -240,7 +241,7 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--num_logs" )
+			"--num_logs" ) shift;
 				if [ "$max_log_fileaction" != "rotate" ]
 				then
 					error $"Parameter %s makes sense only when %s" "num_logs" "max_log_file_action=rotate"
@@ -251,7 +252,7 @@ _mk_auditd_config(){
 					shift
 				fi
 			;;
-			"--disp_qos" )
+			"--disp_qos" ) shift;
 				if _check_argument_is_string "$1" "disp_qos"
 				then
 					case "$1" in
@@ -268,7 +269,7 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--dispatcher" )
+			"--dispatcher" ) shift;
 				if _check_argument_is_string "$1" "dispatcher"
 				then
 					if ! test -x "$1" ; then
@@ -281,7 +282,7 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--distribute_network" )
+			"--distribute_network" ) shift;
 				if [ -n "$dispatcher" ]
 				then
 					_check_argument_is_boolean "$1" "distribute_network" || failed=1
@@ -292,7 +293,7 @@ _mk_auditd_config(){
 				distribute_network="$1"
 				shift
 			;;	
-			"--name_format" )
+			"--name_format" ) shift;
 				if _check_argument_is_string "$1" "name_format"
 				then
 					case "$1" in
@@ -312,7 +313,7 @@ _mk_auditd_config(){
 					failed=1
 				fi
 			;;
-			"--name" )
+			"--name" ) shift;
 				if [ "$name_format" != "user" ]
 				then
 					error $"Parameter %s makes sense only when %s" "name" "name_format != user"
@@ -322,17 +323,17 @@ _mk_auditd_config(){
 					shift
 				fi
 			;;
-			"--max_log_file" )
+			"--max_log_file" ) shift;
 				_check_argument_is_non_negative_number "$1" "max_log_file" || failed=1
 				max_log_file="$1"
 				shift
 			;;
-			"--action_mail_acct" )
+			"--action_mail_acct" ) shift;
 				_validate_email "$1" || failed=1
 				action_mail_acct="$1"
 				shift
 			;;
-			"--space_left" )
+			"--space_left" ) shift;
 				local tmp_space_left="$1"
 				# last character of string (https://stackoverflow.com/a/21635778)
 				if [ "${tmp_space_left: -1}" = "%" ]; then
@@ -344,21 +345,21 @@ _mk_auditd_config(){
 				shift
 				unset tmp_space_left
 			;;
-			"--space_left_action" )
+			"--space_left_action" ) shift;
 				if ! _audit_action_config "$1" "space_left_action" ; then
 					failed=1
 				fi
 				space_left_action="$1"
 				shift
 			;;
-			"--disk_full_action" )
+			"--disk_full_action" ) shift;
 				if ! _audit_action_config "$1" "disk_full_action" ; then
 					failed=1
 				fi
 				disk_full_action="$1"
 				shift
 			;;
-			"--disk_error_action" )
+			"--disk_error_action" ) shift;
 				if ! _audit_action_config "$1" "disk_error_action" ; then
 					failed=1
 				fi
@@ -373,7 +374,7 @@ _mk_auditd_config(){
 			# we will not configure tcp_wrappers, instead we will configure list of allowed and disallowed
 			# IP addresses via systemd (http://0pointer.net/blog/ip-accounting-and-access-lists-with-systemd.html)
 			# Working as an audit server (listening a port) is disabled by default
-			"--tcp_listen_port" )
+			"--tcp_listen_port" ) shift;
 				if _check_argument_is_non_negative_number "$1" "tcp_listen_port"
 				then
 					# 1..65535
@@ -385,8 +386,9 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				tcp_listen_port="$1"
+				shift
 			;;
-			"--tcp_max_per_addr" )
+			"--tcp_max_per_addr" ) shift;
 				if _check_argument_is_non_negative_number "$1" "tcp_max_per_addr"
 				then
 					# 1..65535
@@ -398,21 +400,66 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				tcp_max_per_addr="$1"
+				shift
 			;;
 			# TODO: tcp_client_ports
 			# TODO: tcp_client_max_idle
+
 			# TODO: kerberos authentication against a Kerberos/Samba/FreeIPA server
 			# https://listman.redhat.com/archives/linux-audit/2019-April/msg00110.html
 
-			"--systemd-firewalling-params" )
-				shift
+			"--systemd-firewalling-params" ) shift;
 				_mk_systemd_auditd_override "$1"
+				shift
 			;;
 		esac
-		shift
-		if [ "$failed" != 0 ]; then
-			error $"Errors occured when trying to understand how to configure auditd"
-			return 1
-		fi
 	done
+	if [ "$failed" != 0 ]; then
+		error $"Errors occured when trying to understand how to configure auditd"
+		return 1
+	fi
+	if ! mkdir -p "${VAR_DIR_AUDIT}" ; then
+		error $"Error creating directory %s" "$config_dir"
+		return 1
+	fi
+	# can be sourced from GUI to load previous settings
+	cat > "${VAR_DIR_AUDIT}/auditd-conf.sh" << EOF
+# Generated by linux-infosec-setupper
+local_events="$local_events"
+log_file="$log_file"
+write_logs="$write_logs"
+log_format="$log_format"
+log_group="$log_group"
+priority_boost="$priority_boost"
+flush="$flush"
+freq="$freq"
+max_log_fileaction="$max_log_fileaction"
+num_logs="$num_logs"
+disp_qos="$disp_qos"
+dispatcher="$dispatcher"
+distribute_network="$distribute_network"
+name_format="$name_format"
+name="$name"
+max_log_file="$max_log_file"
+action_mail_acct="$action_mail_acct"
+space_left="$space_left"
+space_left_action="$space_left_action"
+disk_full_action="$disk_full_action"
+disk_error_action="$disk_error_action"
+tcp_listen_port="$tcp_listen_port"
+tcp_max_per_addr="$tcp_max_per_addr"
+EOF
+}
+
+_write_auditd_config(){
+	local config_dir="$(dirname "$AUDIT_DAEMON_CONFIG")"
+	if ! mkdir -p "$config_dir" ; then
+		error $"Error creating directory %s" "$config_dir"
+		return 1
+	fi
+	if ! sed "${VAR_DIR_AUDIT}/auditd-conf.sh" -e 's,=, = ,' -e 's,",,g' -e '/= $/d' > "$AUDIT_DAEMON_CONFIG" ; then
+		error $"Error writing auditd config file %s" "$AUDIT_DAEMON_CONFIG"
+	fi
+	# auditd.service cannot be restarted, a reboot is required
+	echo $"Reboot to apply changes to auditd config"
 }
