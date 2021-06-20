@@ -166,7 +166,6 @@ _mk_auditd_config(){
 			"--local_events" ) shift;
 				_check_argument_is_boolean "$1" "local_events" || failed=1
 				local_events="$1"
-				shift
 			;;
 			# We recommend using default /var/log/audit/audit.log to avoid mess
 			# with SELinux, log rotation (auditd rotates the log by itself by default
@@ -180,7 +179,6 @@ _mk_auditd_config(){
 						failed=1
 					fi
 					log_file="$1"
-					shift
 				else
 					failed=1
 				fi
@@ -188,7 +186,6 @@ _mk_auditd_config(){
 			"--write_logs" ) shift;
 				_check_argument_is_boolean "$1" "write_logs"  || failed=1
 				write_logs="$1"
-				shift
 			;;
 			"--log_format" ) shift;
 				if ! { [ "$1" = "ENRICHED" ] || [ "$1" = "RAW" ] ;}; then
@@ -196,7 +193,6 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				log_format="$1"
-				shift
 			;;
 			"--log_group" ) shift;
 				_check_argument_is_string "$1" "log_group" || failed=1
@@ -205,12 +201,10 @@ _mk_auditd_config(){
 				# may be not yet estabilished, e.g. in a chroot when being run via Anaconda installer,
 				# so such a check does not make sense
 				log_group="$1"
-				shift
 			;;
 			"--priority_boost" ) shift;
 				_check_argument_is_non_negative_number "$1" "priority_boost" || failed=1
 				priority_boost="$1"
-				shift
 			;;
 			"--flush" ) shift;
 				_check_argument_is_string "$1" "flush" || failed=1
@@ -226,13 +220,11 @@ _mk_auditd_config(){
 					;;
 				esac
 				flush="$1"
-				shift
 			;;
 			"--freq" ) shift;
 				if [ "$flush" = "incremental_async" ]; then
 					_check_argument_is_non_negative_number "$1" "freq" || failed=1
 					freq="$1"
-					shift
 				else
 					error $"Parameter %s makes sense only when %s" "freq" "flush=incremental_async"
 					failed=1
@@ -253,7 +245,6 @@ _mk_auditd_config(){
 						;;
 					esac
 					max_log_fileaction="$1"
-					shift
 				else
 					failed=1
 				fi
@@ -266,7 +257,6 @@ _mk_auditd_config(){
 				else
 					_check_argument_is_non_negative_number "$1" "num_logs" || failed=1
 					num_logs="$1"
-					shift
 				fi
 			;;
 			"--disp_qos" ) shift;
@@ -281,7 +271,6 @@ _mk_auditd_config(){
 						;;
 					esac
 					disp_qos="$1"
-					shift
 				else
 					failed=1
 				fi
@@ -294,7 +283,6 @@ _mk_auditd_config(){
 						failed=1
 					fi
 					dispatcher="$1"
-					shift
 				else
 					failed=1
 				fi
@@ -308,7 +296,6 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				distribute_network="$1"
-				shift
 			;;	
 			"--name_format" ) shift;
 				if _check_argument_is_string "$1" "name_format"
@@ -325,7 +312,6 @@ _mk_auditd_config(){
 						;;
 					esac
 					name_format="$1"
-					shift
 				else
 					failed=1
 				fi
@@ -337,18 +323,15 @@ _mk_auditd_config(){
 					failed=1
 				else
 					name="$1"
-					shift
 				fi
 			;;
 			"--max_log_file" ) shift;
 				_check_argument_is_non_negative_number "$1" "max_log_file" || failed=1
 				max_log_file="$1"
-				shift
 			;;
 			"--action_mail_acct" ) shift;
 				_validate_email "$1" || failed=1
 				action_mail_acct="$1"
-				shift
 			;;
 			"--space_left" ) shift;
 				local tmp_space_left="$1"
@@ -359,7 +342,6 @@ _mk_auditd_config(){
 				fi
 				_check_argument_is_non_negative_number "$space_left" "space_left" || failed=1
 				space_left="$1"
-				shift
 				unset tmp_space_left
 			;;
 			"--space_left_action" ) shift;
@@ -367,21 +349,18 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				space_left_action="$1"
-				shift
 			;;
 			"--disk_full_action" ) shift;
 				if ! _audit_action_config "$1" "disk_full_action" ; then
 					failed=1
 				fi
 				disk_full_action="$1"
-				shift
 			;;
 			"--disk_error_action" ) shift;
 				if ! _audit_action_config "$1" "disk_error_action" ; then
 					failed=1
 				fi
 				disk_error_action="$1"
-				shift
 			;;
 			# TODO: admin_space_left
 			# TODO: admin_space_left_action
@@ -403,7 +382,6 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				tcp_listen_port="$1"
-				shift
 			;;
 			"--tcp_max_per_addr" ) shift;
 				if _check_argument_is_non_negative_number "$1" "tcp_max_per_addr"
@@ -417,7 +395,6 @@ _mk_auditd_config(){
 					failed=1
 				fi
 				tcp_max_per_addr="$1"
-				shift
 			;;
 			# TODO: tcp_client_ports
 			# TODO: tcp_client_max_idle
@@ -427,9 +404,9 @@ _mk_auditd_config(){
 
 			"--systemd-firewalling-params" ) shift;
 				_mk_systemd_auditd_override $*
-				shift
 			;;
 		esac
+		shift
 	done
 	if [ "$failed" != 0 ]; then
 		error $"Errors occured when trying to understand how to configure auditd"
