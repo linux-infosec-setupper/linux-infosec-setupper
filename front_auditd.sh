@@ -39,6 +39,8 @@ _rm_temp() {
 }
 trap _rm_temp EXIT
 
+set +e
+
 yad --plug=$_NUMBER --tabnum=1 --form \
 	--text-align=center \
 	--bool-fmt=T \
@@ -115,6 +117,8 @@ if [ "$_status" == 3 ]; then
 	_mk_auditd_config || { _yad_error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
 fi	
 
+set -e
+
 var="$(<"$_temp_file1")$(<"$_temp_file2")"
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
@@ -160,6 +164,12 @@ if ! [[ "$(echo "$var2" | grep -o -- "--numlogs .*")" && "$(echo "$var2" | grep 
 fi
 if ! [[ "$(echo "$var2" | grep -o -- "--freq .*")" && "$(echo "$var2" | grep -o -- "--flush incremental_async")" ]]; then
 	var2="$(echo "$var2" | sed '/^--freq .*/d')"
+fi
+if [[ "$(echo "$var2" | grep -o -- "--tcp_listen_port 0")" ]]; then
+	var2="$(echo "$var2" | sed '/^--tcp_listen_port 0/d')"
+fi
+if [[ "$(echo "$var2" | grep -o -- "--tcp_max_per_addr 0")" ]]; then
+	var2="$(echo "$var2" | sed '/^--tcp_max_per_addr 0/d')"
 fi
 ####
 var2="$(echo "$var2" | tr '\n' ' ')"
