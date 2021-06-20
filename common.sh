@@ -21,9 +21,6 @@ error() {
 	echo '' 1>&2
 }
 
-# Translations
-TEXTDOMAIN=linux-infosec-setupper
-
 # detect running from git tree
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
