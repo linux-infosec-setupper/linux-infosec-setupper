@@ -30,6 +30,10 @@ install:
 	install -m0644 polkit/org.nixtux.pkexec.linux-infosec-setupper-auditd-gui.policy $(DESTDIR)/usr/share/polkit-1/actions/
 	install -m0755 polkit/linux-infosec-setupper-pwquality-gui.sh $(DESTDIR)/usr/bin/linux-infosec-setupper-pwquality-gui
 	install -m0755 polkit/linux-infosec-setupper-auditd-gui.sh $(DESTDIR)/usr/bin/linux-infosec-setupper-auditd-gui
+	
+	mkdir -p $(DESTDIR)/usr/share/applications
+	install -m0644 desktop/pwquality.desktop $(DESTDIR)/usr/share/applications/linux-infosec-setupper-pwquality-gui.desktop
+	install -m0644 desktop/auditd.desktop $(DESTDIR)/usr/share/applications/linux-infosec-setupper-auditd-gui.desktop
 
 rpm:
 	# https://stackoverflow.com/a/1909390

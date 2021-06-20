@@ -2,7 +2,7 @@ Name: linux-infosec-setupper
 Summary: CLI and GUI utilities to setup information security-related parts of Linux
 License: GPLv3
 Group: System/Configuration/Other
-Version: 0.3
+Version: 0.4
 Release: 1
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
@@ -67,6 +67,7 @@ GUI to setup auditd configs
 %{_sbindir}/linux-infosec-setupper-auditd-gui
 %{_bindir}/linux-infosec-setupper-auditd-gui
 %{_datadir}/polkit-1/actions/org.nixtux.pkexec.linux-infosec-setupper-auditd-gui.policy
+%{_datadir}/applications/linux-infosec-setupper-auditd-gui.desktop
 
 #-----------------------------------------------------------------------------------
 
@@ -90,6 +91,7 @@ CLI and backend to setup pwquality configs
 %dir %{_datadir}/linux-infosec-setupper/pwquality
 %{_datadir}/linux-infosec-setupper/pwquality/back_pwquality.sh
 %{_datadir}/linux-infosec-setupper/pwquality/pw_default
+%{_datadir}/applications/linux-infosec-setupper-pwquality-gui.desktop
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper/pwquality
 %ghost /var/lib/linux-infosec-setupper/pwquality/pw_changed
 
