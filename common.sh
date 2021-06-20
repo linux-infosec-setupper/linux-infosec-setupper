@@ -95,7 +95,7 @@ _check_argument_is_boolean(){
 # $2 - param name
 _check_argument_is_non_negative_number(){
 	# 2>/dev/null to avoid odd output if $1 is not a number
-	if ! test "$1" -lt 0 2>/dev/null; then
+	if ! test "$1" -ge 0 2>/dev/null; then
 		error $"Value of %s must be a non-negative number" "$2"
 		return 1
 	fi
