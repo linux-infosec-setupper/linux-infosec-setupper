@@ -2,7 +2,7 @@ Name: linux-infosec-setupper
 Summary: CLI and GUI utilities to setup information security-related parts of Linux
 License: GPLv3
 Group: System/Configuration/Other
-Version: 0.2
+Version: 0.3
 Release: 1
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
@@ -18,7 +18,7 @@ BuildRequires: gettext
 %package common
 Summary: Common parts for subpackages of %{name}
 Group: System/Configuration/Other
-Requires: awk
+Requires: gawk
 Requires: bash
 Requires: coreutils
 Requires: grep
