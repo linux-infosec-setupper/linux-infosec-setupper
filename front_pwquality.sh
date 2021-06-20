@@ -22,7 +22,7 @@ fi
 
 # In case the config was changed manually, or there were errors in it,
 # we check whether everything can be parsed correctly, and if not, it outputs an error
-while read -r line; do declare "$line" || { error $"Unable to parse /etc/security/pwquality.conf correctly; execute \n%s" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
+while read -r line; do declare "$line" || { error $"Unable to parse %s correctly; execute \n%s" "${VAR_DIR_PWQUALITY}/pw_changed" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
 
 # For yad checkboxes, the words TRUE or FALSE are required.
 # We change the following parameters 0 to FALSE and 1 to TRUE

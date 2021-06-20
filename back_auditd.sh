@@ -151,8 +151,8 @@ _audit_variables(){
 	disk_error_action="halt"
 	tcp_listen_port=""
 	tcp_max_per_addr=""
-	systemd_allowed_ip_list=""
-	systemd_denied_ip_list=""
+	systemd_allowed_ip_list="1 1"
+	systemd_denied_ip_list="2 2"
 }
 
 _mk_auditd_config(){
