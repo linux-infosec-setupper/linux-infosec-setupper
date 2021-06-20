@@ -2,7 +2,11 @@ all:
 	cd po/back_auditd ; msgfmt -o linux-infosec-setupper-back_auditd.mo ru.po
 
 install:
+	# bin is for scripts which will run sbin/* via pkexec
 	#mkdir -p $(DESTDIR)/usr/bin
+	# sbin is for executables
+	mkdir -p $(DESTDIR)/usr/sbin
+	install -m0755 front_auditd_cli.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-auditd-cli
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/audit
 	#mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality

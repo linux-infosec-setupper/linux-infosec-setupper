@@ -16,6 +16,11 @@ AUDIT_DAEMON_SYSTEMD_OVERRIDE="${DESTDIR}/etc/systemd/system/auditd.service.d/90
 # validate email, https://stackoverflow.com/a/2138832, https://stackoverflow.com/a/41192733
 REGEX_EMAIL="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
+_echo() {
+	printf -- "$@"
+	echo ''
+}
+
 error() {
 	printf -- "$@" 1>&2
 	echo '' 1>&2

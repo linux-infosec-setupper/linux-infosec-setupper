@@ -44,6 +44,7 @@ Requires: audit
 CLI and backend to setup auditd configs
 
 %files auditd-cli
+%{_sbindir}/linux-infosec-setupper-auditd-cli
 %dir %{_datadir}/linux-infosec-setupper/audit
 %{_datadir}/linux-infosec-setupper/audit/back_auditd.sh
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper/audit
