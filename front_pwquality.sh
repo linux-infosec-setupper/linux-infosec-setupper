@@ -6,8 +6,10 @@ set -e
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
 	source common.sh
+	source back_pwquality.sh
 else
 	source /usr/share/linux-infosec-setupper/common.sh
+	source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
 fi
 
 PWQUALITY_FRONT=1
@@ -115,5 +117,4 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 
-source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
 _mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
