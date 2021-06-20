@@ -40,6 +40,8 @@ done
 _tag1="<span weight='bold'>"
 _tag2="</span>"
 
+set +e
+
 var="$(yad --title="linux-infosec-setupper: pwquality" --form \
 	--text-align=center \
 	--bool-fmt=T \
@@ -86,6 +88,8 @@ var="$(yad --title="linux-infosec-setupper: pwquality" --form \
 	--field=$"Not test the password quality for users that are not present in /etc/passwd::LBL" "!" \
 	  --field=$"Status (local_users_only):CHK" "$local_users_only")"
 	_status="$?"
+
+set -e
 
 # If we clicked on the "Load default" button, we decided to restore the settings.
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
