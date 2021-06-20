@@ -23,7 +23,14 @@ error() {
 
 # Translations
 TEXTDOMAIN=linux-infosec-setupper
-TEXTDOMAINDIR=/usr/share/locale
+
+# detect running from git tree
+if [ -f ./common.sh ] && [ -f "$0" ]
+then
+	TEXTDOMAINDIR="${PWD}/po"
+else
+	TEXTDOMAINDIR=/usr/share/locale
+fi
 
 # $1 - value
 # $2 - param name
