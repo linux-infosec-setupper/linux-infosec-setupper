@@ -49,6 +49,7 @@ CLI and backend to setup auditd configs
 %{_datadir}/linux-infosec-setupper/audit/back_auditd.sh
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper/audit
 %lang(ru) %{_datadir}/locale/ru/LC_MESSAGES/linux-infosec-setupper-back_auditd.mo
+%ghost /var/lib/linux-infosec-setupper/audit/auditd-conf.sh
 
 #-----------------------------------------------------------------------------------
 
@@ -60,6 +61,10 @@ CLI and backend to setup auditd configs
 
 %install
 %make_install
+
+# ghost files
+mkdir -p %{buildroot}/var/lib/linux-infosec-setupper/audit/
+touch %{buildroot}/var/lib/linux-infosec-setupper/audit/auditd-conf.sh
 
 %check
 bash -x ./test_back_auditd.sh
