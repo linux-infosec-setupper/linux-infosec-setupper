@@ -32,8 +32,8 @@ var="$(yad --title=$"linux-infosec-setupper" --form \
 	--width=800 \
 	--height=800 \
 	--button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
-	--field=$"Number of characters in the new password that must not be present in the old password::LBL" "!" \
-	  --field=$"Value (difok)::NUM" "$difok!1..9999!1" \
+	--field=$"<span weight='bold'>Number of characters in the new password that must not be present in the old password</span>::LBL" "!" \
+	  --field=$"Value (difok):NUM" "$difok!1..9999!1" \
 	--field=$"Minimum acceptable size for the new password:LBL" "!" \
 	  --field=$"Value (minlen):NUM" "$minlen!6..9999!1" \
 	--field=$"The maximum credit for having digits in the new password::LBL" "!" \
