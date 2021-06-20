@@ -1,11 +1,15 @@
 #!/bin/bash
 
+set -e
+
 # detect running from git tree
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
 	source common.sh
+	source parse_pwquality.sh
 else
 	source /usr/share/linux-infosec-setupper/common.sh
+	source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
 fi
 
 PWQUALITY_FRONT=1
@@ -18,7 +22,6 @@ if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
 	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
 fi	
 
-source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
 # In case the config was changed manually, or there were errors in it,
 # we check whether everything can be parsed correctly, and if not, it outputs an error
 while read -r line; do declare "$line" || { error $"Unable to parse /etc/security/pwquality.conf correctly; execute \n%s" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
