@@ -1,0 +1,469 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linux-infosec-setupper\n"
+"Report-Msgid-Bugs-To: https://github.com/linux-infosec-setupper/linux-"
+"infosec-setupper/issues\n"
+"POT-Creation-Date: 2020-11-13 06:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../back_auditd.sh:32
+msgid "Entered %s=exec /path/to/script does not contain a path to script"
+msgstr ""
+
+#: ../back_auditd.sh:35
+msgid ""
+"%s=exec* can have only one agrument — path to script, example: %s=exec /path/"
+"to/script"
+msgstr ""
+
+#: ../back_auditd.sh:40
+msgid "Script %s is not executable"
+msgstr ""
+
+#: ../back_auditd.sh:46 ../back_auditd.sh:226 ../back_auditd.sh:253
+#: ../back_auditd.sh:281 ../back_auditd.sh:325
+msgid "Possible values of %s are: %s"
+msgstr ""
+
+#: ../back_auditd.sh:80 ../back_auditd.sh:441 ../back_auditd.sh:478
+msgid "Error creating directory %s"
+msgstr ""
+
+#: ../back_auditd.sh:111
+msgid "Error copying systemd override file %s to %s"
+msgstr ""
+
+#: ../back_auditd.sh:118
+msgid ""
+"Systemd unit file auditd.service with setted up packet filtering has not "
+"passed verification!"
+msgstr ""
+
+#: ../back_auditd.sh:119
+msgid "The error was:"
+msgstr ""
+
+#: ../back_auditd.sh:181
+msgid "Directory %s does not exist"
+msgstr ""
+
+#: ../back_auditd.sh:197
+msgid "Value of %s must be %s or %s"
+msgstr ""
+
+#: ../back_auditd.sh:239 ../back_auditd.sh:266 ../back_auditd.sh:338
+msgid "Parameter %s makes sense only when %s"
+msgstr ""
+
+#: ../back_auditd.sh:295
+msgid ""
+"File %s does not exist or is not executable, so %s cannot be set as a "
+"dispatcher executable"
+msgstr ""
+
+#: ../back_auditd.sh:309
+msgid "%s requires %s to be configured"
+msgstr ""
+
+#: ../back_auditd.sh:401 ../back_auditd.sh:415
+msgid "%s must be an integer between %s and %s"
+msgstr ""
+
+#: ../back_auditd.sh:437
+msgid "Errors occured when trying to understand how to configure auditd"
+msgstr ""
+
+#: ../back_auditd.sh:482
+msgid "Error writing auditd config file %s"
+msgstr ""
+
+#: ../back_auditd.sh:485
+msgid "Reboot to apply changes to auditd config"
+msgstr ""
+
+#: ../back_pwquality.sh:14 ../front_pwquality_cli.sh:22
+#: ../front_pwquality.sh:25
+msgid "Unable to parse /etc/security/pwquality.conf correctly; execute \\n%s"
+msgstr ""
+
+#: ../back_pwquality.sh:59 ../back_pwquality.sh:64 ../back_pwquality.sh:69
+#: ../back_pwquality.sh:78 ../back_pwquality.sh:87 ../back_pwquality.sh:92
+msgid "The received parameters are not correct. Expected %s, received %s"
+msgstr ""
+
+#: ../back_pwquality.sh:59 ../back_pwquality.sh:64 ../back_pwquality.sh:69
+#: ../back_pwquality.sh:78 ../back_pwquality.sh:87 ../back_pwquality.sh:92
+msgid "0 or 1"
+msgstr ""
+
+#: ../common.sh:49
+msgid "Argument to %s must be a number"
+msgstr ""
+
+#: ../common.sh:58
+msgid "Argument to %s must be greater than %s"
+msgstr ""
+
+#: ../common.sh:69
+msgid "Argument to %s must be a string without spaces"
+msgstr ""
+
+#: ../common.sh:83
+msgid "Value of %s is empty, set yes or no"
+msgstr ""
+
+#: ../common.sh:87
+msgid "String %s is not a boolean, set yes or no"
+msgstr ""
+
+#: ../common.sh:98
+msgid "Value of %s must be a non-negative number"
+msgstr ""
+
+#: ../common.sh:105
+msgid "%s is not a correct email"
+msgstr ""
+
+#: ../front_auditd_cli.sh:17
+msgid "This is generator of auditd config"
+msgstr ""
+
+#: ../front_auditd_cli.sh:18
+msgid "Run as: %s [--parameter value] [--parameter value]"
+msgstr ""
+
+#: ../front_auditd_cli.sh:19
+msgid "Supported parameters of auditd and their default values are:"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:18 ../front_pwquality_cli.sh:19
+#: ../front_pwquality_cli.sh:83 ../front_pwquality.sh:19
+#: ../front_pwquality.sh:20 ../front_pwquality.sh:87 ../front_pwquality.sh:119
+msgid "Unable to write to file %s"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:37
+msgid "No arguments specified"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:42
+msgid "Usage: #NAME# --[OPTIONS...]"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:43
+msgid "  example: #NAME# --difok 6"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:44
+msgid "  example: #NAME# d 6"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:45
+msgid ""
+"#NAME# allows you to manage the file configuration for pwquality in the cli "
+"option. A GUI version is also available: #NAME2#"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:47
+msgid "  Options:"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:48
+msgid ""
+"    d,  difok             Number of characters in the new password that must "
+"not be present in the old password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:49
+msgid "    m,  minlen            Minimum acceptable size for the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:50
+msgid ""
+"    dc, dcredit           The maximum credit for having digits in the new "
+"password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:51
+msgid ""
+"    uc, ucredit           The maximum credit for having uppercase characters "
+"in the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:52
+msgid ""
+"    lc, lcredit           The maximum credit for having lowercase characters "
+"in the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:53
+msgid ""
+"    oc, ocredit           The maximum credit for having other characters in "
+"the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:54
+msgid ""
+"        minclass          The minimum number of required classes of "
+"characters for the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:55
+msgid ""
+"        maxrepeat         The maximum number of allowed same consecutive "
+"characters in the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:56
+msgid ""
+"        maxsequence       The maximum length of monotonic character "
+"sequences in the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:57
+msgid ""
+"        maxclassrepeat    The maximum number of allowed consecutive "
+"characters of the same class in the new password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:58
+msgid ""
+"    geco, gecoscheck      Check whether the words longer than 3 characters "
+"from the GECOS field of the user's passwd(5) entry are contained in the new "
+"password"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:59
+msgid ""
+"        dictcheck         Check whether the password (with possible "
+"modifications) matches a word in a dictionary"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:60
+msgid ""
+"        usercheck         Check whether the password (with possible "
+"modifications) contains the user name in some form"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:61
+msgid ""
+"        usersubstr        Check whether the password contains a substring of "
+"at least N length in some form"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:62
+msgid ""
+"        enforcing         Reject the password if it fails the checks, "
+"otherwise only print the warning"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:63
+msgid ""
+"        retry             Prompt user at most N times before returning with "
+"error"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:64
+msgid ""
+"        enforce_for_root  The module will return error on failed check even "
+"if the user changing the password is root"
+msgstr ""
+
+#: ../front_pwquality_cli.sh:65
+msgid ""
+"        local_users_only  The module will not test the password quality for "
+"users that are not present in the /etc/passwd file"
+msgstr ""
+
+#: ../front_pwquality.sh:31
+msgid "Unable to set variable %s"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "linux-infosec-setupper"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "<span size='xx-large' weight='bold'>Password policies setup</span>"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Load defaults!view-refresh:3"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "yad-save:0"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "yad-close:1"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"Number of characters in the new password that must not be present in the old "
+"password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (difok)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Minimum acceptable size for the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (minlen)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "The maximum credit for having digits in the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (dcredit)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The maximum credit for having uppercase characters in the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (ucredit)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The maximum credit for having lowercase characters in the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (lcredit)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "The maximum credit for having other characters in the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (ocredit)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The minimum number of required classes of characters for the new password::"
+"LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (minclass)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The maximum number of allowed same consecutive charatcers in the new "
+"password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (maxrepeat)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The maximum length of monotonic chatacter sequences in the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (maxsequence)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"The maximum number of allowed consecutive characters of the same class in "
+"the new password::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (maxclassrepeat)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"Check whether the password contains a substring of at least N length::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (usersubstr)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Prompt the user at most N times before returning error::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "${_tag1}Value (retry)${_tag2}:NUM"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"Check whether the words longer than 3 characters from the GECO field of "
+"passwd::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (gecoscheck):CHK"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Check whether the password macthices a word in a dictionary::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (dictcheck):CHK"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Check whether the password contains the user name in some form::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (usercheck):CHK"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Reject the password if it fails the checks::LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (enforcing):CHK"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"Return error on failed check even if the user changing the password is root::"
+"LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (enforce_for_root):CHK"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid ""
+"Not test the password quality for users that are not present in /etc/passwd::"
+"LBL"
+msgstr ""
+
+#: ../front_pwquality.sh:37
+msgid "Status (local_users_only):CHK"
+msgstr ""

@@ -6,8 +6,10 @@ set -e
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
 	source common.sh
+	source back_pwquality.sh
 else
 	source /usr/share/linux-infosec-setupper/common.sh
+	source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
 fi
 
 PWQUALITY_FRONT=1
@@ -34,7 +36,7 @@ done
 _tag1="<span weight='bold'>"
 _tag2="</span>"
 
-var="$(yad --title=$"linux-infosec-setupper" --form \
+var="$(yad --title="linux-infosec-setupper: pwquality" --form \
 	--text-align=center \
 	--bool-fmt=T \
 	--text=$"<span size='xx-large' weight='bold'>Password policies setup</span>" \
@@ -69,7 +71,7 @@ var="$(yad --title=$"linux-infosec-setupper" --form \
 	  --field=$"${_tag1}Value (retry)${_tag2}:NUM" "$retry:0..9999:1" \
 	--field=$"Check whether the words longer than 3 characters from the GECO field of passwd::LBL" "!" \
 	  --field=$"Status (gecoscheck):CHK" "$gecoscheck" \
-	--field=$"Check whether the password macthices a word in a dictionary::LBL" "!" \
+	--field=$"Check whether the password matches a word in a dictionary::LBL" "!" \
 	  --field=$"Status (dictcheck):CHK" "$dictcheck" \
 	--field=$"Check whether the password contains the user name in some form::LBL" "!" \
 	  --field=$"Status (usercheck):CHK" "$usercheck" \
@@ -115,5 +117,4 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 
-source "${SHARE_DIR_PWQUALITY}/back_pwquality.sh"
 _mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
