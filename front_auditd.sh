@@ -95,9 +95,9 @@ yad --plug=$_NUMBER --tabnum=2 --form \
 	--image=security-medium \
 	--scroll \
 	--field=$"Tcp listen port::LBL" "!" \
-	  --field=$"${_tag1}(Value) Tcp listen port${_tag2}::NUM" "${tcp_listen_port:-1}!1..65535!1" \
+	  --field=$"${_tag1}(Value) Tcp listen port${_tag2}::NUM" "${tcp_listen_port:--}!1..65535!1" \
 	--field=$"Tcp max per addr::LBL" "!" \
-	  --field=$"${_tag1}(Value) Tcp max per addr${_tag2}::NUM" "${tcp_max_per_addr_port:-1}!1..65535!1" \
+	  --field=$"${_tag1}(Value) Tcp max per addr${_tag2}::NUM" "${tcp_max_per_addr_port:--}!1..65535!1" \
 	--field=$"Systemd firewalling params:LBL" "!" \
 	  --field=$"${_tag1}(Value) Allowed IPs${_tag2}::TXT" "$(if [ -z "$systemd_allowed_ips" ]; then echo "-"; else echo -e "${systemd_allowed_ip_list// /\\n}"; fi)" \
 	  --field=$"${_tag1}(Value) Denied IPs${_tag2}::TXT" "$(if [ -z "$systemd_allowed_ips" ]; then echo "-"; else echo -e "${systemd_denied_ip_list// /\\n}"; fi)" &>"$_temp_file2" &
@@ -113,7 +113,6 @@ yad --key=$_NUMBER --notebook --stack --expand --tab=$"Audit" --tab=$"Network" \
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
 	_mk_auditd_config || { _yad_error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
-
 fi	
 
 var="$(<"$_temp_file1")$(<"$_temp_file2")"

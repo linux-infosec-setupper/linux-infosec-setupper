@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=pwquality setup
+Name[ru]=Настройка pwquality
+Categories=GTK;Settings;
+Exec=/usr/bin/linux-infosec-setupper-auditd-gui
+Icon=gcr-key
+Terminal=false
+Type=Application
+StartupNotify=true

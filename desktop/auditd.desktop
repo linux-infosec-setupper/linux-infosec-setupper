@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Auditd Setup
+Name[ru]=Настройка Auditd
+Categories=GTK;Settings;
+Exec=/usr/bin/linux-infosec-setupper-auditd-gui
+Icon=security-medium
+Terminal=false
+Type=Application
+StartupNotify=true
