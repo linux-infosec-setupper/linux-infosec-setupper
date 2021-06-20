@@ -104,88 +104,87 @@ msgstr ""
 #: ../back_pwquality.sh:59 ../back_pwquality.sh:64 ../back_pwquality.sh:69
 #: ../back_pwquality.sh:78 ../back_pwquality.sh:87 ../back_pwquality.sh:92
 msgid "The received parameters are not correct. Expected %s, received %s"
-msgstr ""
+msgstr "полученные параметры неправильны. Ожидалось %s, а получено %s"
 
 #: ../back_pwquality.sh:59 ../back_pwquality.sh:64 ../back_pwquality.sh:69
 #: ../back_pwquality.sh:78 ../back_pwquality.sh:87 ../back_pwquality.sh:92
 msgid "0 or 1"
-msgstr ""
+msgstr "0 или 1"
 
 #: ../common.sh:49
-#, fuzzy
 msgid "Argument to %s must be a number"
-msgstr "Значением %s должно быть %s или %s"
+msgstr "Значением %s должно быть число"
 
 #: ../common.sh:58
 #, fuzzy
 msgid "Argument to %s must be greater than %s"
-msgstr "Значением %s должно быть %s или %s"
+msgstr "Значение %s должно быть больше значения %s"
 
 #: ../common.sh:69
 msgid "Argument to %s must be a string without spaces"
-msgstr ""
+msgstr "Значение %s должно быть строкой без пробелов"
 
 #: ../common.sh:83
-#, fuzzy
 msgid "Value of %s is empty, set yes or no"
-msgstr "Значением %s должно быть %s или %s"
+msgstr "Значение %s пусто, задайте yes или no"
 
 #: ../common.sh:87
 msgid "String %s is not a boolean, set yes or no"
-msgstr ""
+msgstr "Строка %s не является булеановым значением, задайте yes или no"
 
 #: ../common.sh:98
-#, fuzzy
 msgid "Value of %s must be a non-negative number"
-msgstr "Значением %s должно быть %s или %s"
+msgstr "Значение %s должно быть целым числом больше нуля"
 
 #: ../common.sh:105
 msgid "%s is not a correct email"
-msgstr ""
+msgstr "%s не является валидным адресом электропочты"
 
 #: ../front_auditd_cli.sh:17
 msgid "This is generator of auditd config"
-msgstr ""
+msgstr "Это генератор конфига auditd"
 
 #: ../front_auditd_cli.sh:18
 msgid "Run as: %s [--parameter value] [--parameter value]"
-msgstr ""
+msgstr "Запускайте его так: %s [--параметр значение] [--параметр значение]"
 
 #: ../front_auditd_cli.sh:19
 msgid "Supported parameters of auditd and their default values are:"
-msgstr ""
+msgstr "Поддерживаемые параметров auditd и их значения по умолчанию таковы:"
 
 #: ../front_pwquality_cli.sh:18 ../front_pwquality_cli.sh:19
 #: ../front_pwquality_cli.sh:83 ../front_pwquality.sh:19
 #: ../front_pwquality.sh:20 ../front_pwquality.sh:87 ../front_pwquality.sh:119
 msgid "Unable to write to file %s"
-msgstr ""
+msgstr "Невозможно записать в файл %s"
 
 #: ../front_pwquality_cli.sh:37
 msgid "No arguments specified"
-msgstr ""
+msgstr "Не передано никаких аргументов"
 
 #: ../front_pwquality_cli.sh:42
 msgid "Usage: #NAME# --[OPTIONS...]"
-msgstr ""
+msgstr "Использование: #NAME# --[OPTIONS...]"
 
 #: ../front_pwquality_cli.sh:43
 msgid "  example: #NAME# --difok 6"
-msgstr ""
+msgstr "  пример: #NAME# --difok 6"
 
 #: ../front_pwquality_cli.sh:44
 msgid "  example: #NAME# d 6"
-msgstr ""
+msgstr "   пример: #NAME# d 6"
 
 #: ../front_pwquality_cli.sh:45
 msgid ""
 "#NAME# allows you to manage the file configuration for pwquality in the cli "
 "option. A GUI version is also available: #NAME2#"
 msgstr ""
+"#NAME# позволяет управлять конфигом pwquality через cli. "
+"Также доступна гарфическая версия: #NAME2#"
 
 #: ../front_pwquality_cli.sh:47
 msgid "  Options:"
-msgstr ""
+msgstr "  Параметры:"
 
 #: ../front_pwquality_cli.sh:48
 msgid ""
@@ -296,7 +295,7 @@ msgstr ""
 
 #: ../front_pwquality.sh:31
 msgid "Unable to set variable %s"
-msgstr ""
+msgstr "Невозможно установить переменную %s"
 
 #: ../front_pwquality.sh:37
 msgid "linux-infosec-setupper"
@@ -304,11 +303,11 @@ msgstr ""
 
 #: ../front_pwquality.sh:37
 msgid "<span size='xx-large' weight='bold'>Password policies setup</span>"
-msgstr ""
+msgstr "<span size='xx-large' weight='bold'>Настройка политики сложности паролей</span>"
 
 #: ../front_pwquality.sh:37
 msgid "Load defaults!view-refresh:3"
-msgstr ""
+msgstr "Сбросить настройки!view-refresh:3"
 
 #: ../front_pwquality.sh:37
 msgid "yad-save:0"
@@ -323,6 +322,7 @@ msgid ""
 "Number of characters in the new password that must not be present in the old "
 "password::LBL"
 msgstr ""
+"Количество символов из нового пароля, которых не должно быть в старом пароле::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (difok)${_tag2}:NUM"
@@ -330,7 +330,7 @@ msgstr ""
 
 #: ../front_pwquality.sh:37
 msgid "Minimum acceptable size for the new password::LBL"
-msgstr ""
+msgstr "Минимальный допустимый размер нового пароля::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (minlen)${_tag2}:NUM"
@@ -338,7 +338,7 @@ msgstr ""
 
 #: ../front_pwquality.sh:37
 msgid "The maximum credit for having digits in the new password::LBL"
-msgstr ""
+msgstr "Максималньый кредит на цифры в новом пароле::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (dcredit)${_tag2}:NUM"
@@ -347,7 +347,7 @@ msgstr ""
 #: ../front_pwquality.sh:37
 msgid ""
 "The maximum credit for having uppercase characters in the new password::LBL"
-msgstr ""
+msgstr "Максимальный кредит на заглавные буквы в новом пароле::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (ucredit)${_tag2}:NUM"
@@ -356,7 +356,7 @@ msgstr ""
 #: ../front_pwquality.sh:37
 msgid ""
 "The maximum credit for having lowercase characters in the new password::LBL"
-msgstr ""
+msgstr "Максимальный кредит на строчные буквы в новом пароле::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (lcredit)${_tag2}:NUM"
@@ -364,7 +364,7 @@ msgstr ""
 
 #: ../front_pwquality.sh:37
 msgid "The maximum credit for having other characters in the new password::LBL"
-msgstr ""
+msgstr "Максимальный кредит на осталньые символы в новом пароле"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (ocredit)${_tag2}:NUM"
@@ -374,7 +374,7 @@ msgstr ""
 msgid ""
 "The minimum number of required classes of characters for the new password::"
 "LBL"
-msgstr ""
+msgstr "Минимальное необходимое кол-во типов символов в новом пароле::LBL"
 
 #: ../front_pwquality.sh:37
 msgid "${_tag1}Value (minclass)${_tag2}:NUM"

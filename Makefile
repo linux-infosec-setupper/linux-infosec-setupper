@@ -3,15 +3,19 @@ all:
 
 install:
 	# bin is for scripts which will run sbin/* via pkexec
-	#mkdir -p $(DESTDIR)/usr/bin
+	mkdir -p $(DESTDIR)/usr/bin
 	# sbin is for executables
 	mkdir -p $(DESTDIR)/usr/sbin
 	install -m0755 front_auditd_cli.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-auditd-cli
+	install -m0755 front_pwquality_cli.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-pwquality-cli
+	install -m0755 front_pwquality.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-pwquality-gui
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/audit
-	#mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality
+	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality
+	install -m0644 pw_default $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality/pw_default
 	install -m0644 common.sh $(DESTDIR)/usr/share/linux-infosec-setupper/common.sh
 	install -m0644 back_auditd.sh $(DESTDIR)/usr/share/linux-infosec-setupper/audit/back_auditd.sh
+	install -m0644 back_pwquality.sh $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality/back_pwquality.sh
 	mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper
 	mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper/audit
 	#mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper/pwquality
@@ -19,6 +23,10 @@ install:
 	
 	mkdir -p $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES
 	msgfmt -o $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES/linux-infosec-setupper.mo po/ru.po
+
+	mkdir -p $(DESTDIR)/usr/share/polkit-1/actions
+	install -m0644 polkit/org.nixtux.pkexec.linux-infosec-setupper-pwquality-gui.policy $(DESTDIR)/usr/share/polkit-1/actions/
+	install -m0755 polkit/linux-infosec-setupper-pwquality-gui.sh $(DESTDIR)/usr/bin/linux-infosec-setupper-pwquality-gui
 
 rpm:
 	# https://stackoverflow.com/a/1909390
