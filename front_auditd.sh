@@ -13,7 +13,7 @@ else
 fi
 
 if ! [ -f "${VAR_DIR_AUDIT}/auditd-conf.sh}" ]; then
-	_mk_auditd_config || { error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
+	_mk_auditd_config || { _yad_error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
 fi
 
 source "${VAR_DIR_AUDIT}/auditd-conf.sh" || exit 1
@@ -22,7 +22,7 @@ source "${VAR_DIR_AUDIT}/auditd-conf.sh" || exit 1
 # We change the following parameters no to FALSE and yes to TRUE
 for i in local_events write_logs distribute_network; do
 	# The variables have the same name as the lines in the config
-	eval 'if [[ $'$i' == "yes" ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { error $"Unable to set variable %s" "$i"; exit 1; }
+	eval 'if [[ $'$i' == "yes" ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { _yad_error $"Unable to set variable %s" "$i"; exit 1; }
 done
 
 _tag1="<span weight='bold'>"
@@ -48,13 +48,13 @@ yad --plug=$_NUMBER --tabnum=1 --form \
 	--field=$"Local events::LBL" "!" \
 	  --field=$"(Status) Local events:CHK" "${local_events:-FALSE}" \
 	--field=$"Log file::LBL" "!" \
-	  --field=$"${_tag1}(String) Log file${_tag2}:SFL" "${log_file}" \
+	  --field=$"${_tag1}(String) Log file${_tag2}:SFL" "${log_file:-@}" \
 	--field=$"Write logs::LBL" "!" \
 	  --field=$"(Status) Write logs:CHK" "${write_logs:-FALSE}" \
 	--field=$"Log format::LBL" "!" \
 	  --field=$"${_tag1}(Value) Log format${_tag2}:CB" "$(if [ -n "$log_format" ]; then echo "RAW!ENRICHED!" | sed "s/$log_format\!/\^$log_format\!/g;s/\!\$//"; else echo "RAW!ENRICHED"; fi)" \
 	--field=$"Log group::LBL" "!" \
-	  --field=$"${_tag1}(String) Log group${_tag2}" "${log_group}" \
+	  --field=$"${_tag1}(String) Log group${_tag2}" "${log_group:-@}" \
 	--field=$"Priority boost::LBL" "!" \
 	  --field=$"${_tag1}(Value) Priority boost${_tag2}:NUM" "${priority_boost:-0}!" \
 	--field=$"Flush::LBL" "!" \
@@ -68,17 +68,17 @@ yad --plug=$_NUMBER --tabnum=1 --form \
 	--field=$"Disp Qos::LBL" "!" \
 	  --field=$"${_tag1}(Value) Disp Qos${_tag2}:CB" "$(if [ -n "$disp_qos" ]; then echo "lossy!lossless!" | sed "s/$disp_qos\!/\^$disp_qos\!/g;s/\!\$//"; else echo "lossy!lossless"; fi)" \
 	--field=$"Dispatcher::LBL" "!" \
-	  --field=$"${_tag1}(String) dispatcher${_tag2}:SFL" "${dispatcher}" \
+	  --field=$"${_tag1}(String) dispatcher${_tag2}:SFL" "${dispatcher:-@}" \
 	--field=$"Distribute network::LBL" "!" \
 	  --field=$"(Status) Distribute network:CHK" "${distribute_network:-FALSE}" \
 	--field=$"Name format::LBL" "!" \
 	  --field=$"${_tag1}(Value) Name format${_tag2}:CB" "$(if [ -n "$name_format" ]; then echo "none!hostname!fqd!numeric!user!" | sed "s/$name_format\!/\^$name_format\!/g;s/\!\$//"; else echo "none!hostname!fqd!numeric!user"; fi)" \
 	--field=$"Name::LBL" "!" \
-	  --field=$"${_tag1}(String) Name${_tag2}" "${name}" \
+	  --field=$"${_tag1}(String) Name${_tag2}" "${name:-@}" \
 	--field=$"Max log file::LBL" "!" \
 	  --field=$"${_tag1}(Value) Max log file${_tag2}:NUM" "${max_log_file:-0}!" \
 	--field=$"Action Mail Acct::LBL" "!" \
-	  --field=$"${_tag1}(String) Action Mail Acct${_tag2}:" "${action_mail_acct}" \
+	  --field=$"${_tag1}(String) Action Mail Acct${_tag2}:" "${action_mail_acct:-@}" \
 	--field=$"Space left::LBL" "!" \
 	  --field=$"${_tag1}(Value) Space left${_tag2}:NUM" "${space_left:-0}!" \
 	--field=$"Space left action::LBL" "!" \
@@ -99,8 +99,8 @@ yad --plug=$_NUMBER --tabnum=2 --form \
 	--field=$"Tcp max per addr::LBL" "!" \
 	  --field=$"${_tag1}(Value) Tcp max per addr${_tag2}::NUM" "${tcp_max_per_addr_port:-1}!1..65535!1" \
 	--field=$"Systemd firewalling params:LBL" "!" \
-	  --field=$"${_tag1}(Value) Allowed IPs${_tag2}::TXT" "$(echo -e "${systemd_allowed_ip_list// /\\n}")" \
-	  --field=$"${_tag1}(Value) Denied IPs${_tag2}::TXT" "$(echo -e "${systemd_denied_ip_list// /\\n}")" &>"$_temp_file2" &
+	  --field=$"${_tag1}(Value) Allowed IPs${_tag2}::TXT" "$(if [ -z "$systemd_allowed_ips" ]; then echo "@"; else echo -e "${systemd_allowed_ip_list// /\\n}"; fi)" \
+	  --field=$"${_tag1}(Value) Denied IPs${_tag2}::TXT" "$(if [ -z "$systemd_allowed_ips" ]; then echo "@"; else echo -e "${systemd_denied_ip_list// /\\n}"; fi)" &>"$_temp_file2" &
 
 #systemd-firewalling-params
 yad --key=$_NUMBER --notebook --stack --expand --tab=$"Audit" --tab=$"Network" \
@@ -112,7 +112,7 @@ yad --key=$_NUMBER --notebook --stack --expand --tab=$"Audit" --tab=$"Network" \
 # If we clicked on the "Load default" button, we decided to restore the settings.
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
-	_mk_auditd_config || { error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
+	_mk_auditd_config || { _yad_error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
 
 fi	
 
@@ -120,8 +120,12 @@ var="$(<"$_temp_file1")$(<"$_temp_file2")"
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
 [ -z "$var" ] && exit 0
-
 # The default delimiter in yad is |
+while read -rd '|' line; do
+	echo $line
+done <<<"$var" | sed '/^$/d'
+#exit 0
+
 var2="$(while read -rd '|' line; do
 	echo $line
 done <<<"$var" | sed '/^$/d' | \
@@ -153,5 +157,6 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;24s/^/--systemd_allowed_ip_list /
 	    ;25s/^/--systemd_denied_ip_list /' | tr '\n' ' ')"
 set -e
-_mk_auditd_config $var2 || { error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
-_write_auditd_config || { error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
+echo "$var2"
+_mk_auditd_config $var2 || { _yad_error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
+_write_auditd_config || { _yad_error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
