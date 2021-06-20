@@ -25,8 +25,10 @@ error() {
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
 	TEXTDOMAINDIR="${PWD}/po"
+	PW_DEFAULT=pw_default
 else
 	TEXTDOMAINDIR=/usr/share/locale
+	PW_DEFAULT="${SHARE_DIR_PWQUALITY}/pw_default"
 fi
 
 # $1 - value

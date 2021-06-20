@@ -1,0 +1,78 @@
+#: ../back_auditd.sh:26
+msgid "Entered %s=exec /path/to/script does not contain a path to script"
+msgstr ""
+#: ../back_auditd.sh:29
+msgid "%s=exec* can have only one agrument — path to script, example: %s=exec /path/to/script"
+msgstr ""
+#: ../back_auditd.sh:34
+msgid "Script %s is not executable"
+msgstr ""
+#: ../back_auditd.sh:40
+msgid "Possible values of %s are: %s"
+msgstr ""
+#: ../back_auditd.sh:74
+msgid "Error creating directory %s"
+msgstr ""
+#: ../back_auditd.sh:103
+msgid "Error copying systemd override file %s to %s"
+msgstr ""
+#: ../back_auditd.sh:110
+msgid "Systemd unit file auditd.service with setted up packet filtering has not passed verification!"
+msgstr ""
+#: ../back_auditd.sh:111
+msgid "The error was:"
+msgstr ""
+#: ../back_auditd.sh:171
+msgid "Directory %s does not exist"
+msgstr ""
+#: ../back_auditd.sh:187
+msgid "Value of %s must be %s or %s"
+msgstr ""
+#: ../back_auditd.sh:216
+msgid "Possible values of %s are: %s"
+msgstr ""
+#: ../back_auditd.sh:229
+msgid "Parameter %s makes sense only when %s"
+msgstr ""
+#: ../back_auditd.sh:243
+msgid "Possible values of %s are: %s"
+msgstr ""
+#: ../back_auditd.sh:256
+msgid "Parameter %s makes sense only when %s"
+msgstr ""
+#: ../back_auditd.sh:271
+msgid "Possible values of %s are: %s"
+msgstr ""
+#: ../back_auditd.sh:285
+msgid "File %s does not exist or is not executable, so %s cannot be set as a dispatcher executable"
+msgstr ""
+#: ../back_auditd.sh:299
+msgid "%s requires %s to be configured"
+msgstr ""
+#: ../back_auditd.sh:315
+msgid "Possible values of %s are: %s"
+msgstr ""
+#: ../back_auditd.sh:328
+msgid "Parameter %s makes sense only when %s"
+msgstr ""
+#: ../back_auditd.sh:391
+msgid "%s must be an integer between %s and %s"
+msgstr ""
+#: ../back_auditd.sh:405
+msgid "%s must be an integer between %s and %s"
+msgstr ""
+#: ../back_auditd.sh:427
+msgid "Errors occured when trying to understand how to configure auditd"
+msgstr ""
+#: ../back_auditd.sh:431
+msgid "Error creating directory %s"
+msgstr ""
+#: ../back_auditd.sh:466
+msgid "Error creating directory %s"
+msgstr ""
+#: ../back_auditd.sh:470
+msgid "Error writing auditd config file %s"
+msgstr ""
+#: ../back_auditd.sh:473
+msgid "Reboot to apply changes to auditd config"
+msgstr ""

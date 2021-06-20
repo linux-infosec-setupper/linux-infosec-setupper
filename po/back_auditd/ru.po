@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#: ../back_auditd.sh:26
+msgid "Entered %s=exec /path/to/script does not contain a path to script"
+msgstr "Введенное значение %s=exec /путь/к/скрипту не содержит путь к скрипту"
+
+#: ../back_auditd.sh:29
+msgid "%s=exec* can have only one agrument — path to script, example: %s=exec /path/to/script"
+msgstr "У %s=exec* может быть только один аргумент — путь к скрипту, например: %s=exec /путь/к/скрипту"
+
+#: ../back_auditd.sh:34
+msgid "Script %s is not executable"
+msgstr "Скрипт %s не является выполняемым"
+
+#: ../back_auditd.sh:40 ../back_auditd.sh:216 ../back_auditd.sh:243 ../back_auditd.sh:271 ../back_auditd.sh:315
+msgid "Possible values of %s are: %s"
+msgstr "Возможны следующие значения %s: %s"
+
+#: ../back_auditd.sh:74 ../back_auditd.sh:431 ../back_auditd.sh:466
+msgid "Error creating directory %s"
+msgstr "Ошибка создания каталога %s"
+
+#: ../back_auditd.sh:103
+msgid "Error copying systemd override file %s to %s"
+msgstr "Ошибка копирования файла дополнительных настроек systemd %s в %s"
+
+#: ../back_auditd.sh:110
+msgid "Systemd unit file auditd.service with setted up packet filtering has not passed verification!"
+msgstr "Файл унита systemd auditd.service с настроенной фильтрацией сетевого трафика не прошел проверку на правильность синтаксиса!"
+
+#: ../back_auditd.sh:111
+msgid "The error was:"
+msgstr "Ошибка была следующей:"
+
+#: ../back_auditd.sh:171
+msgid "Directory %s does not exist"
+msgstr "Каталог %s не существует"
+
+#: ../back_auditd.sh:187
+msgid "Value of %s must be %s or %s"
+msgstr "Значением %s должно быть %s или %s"
+
+#: ../back_auditd.sh:229 ../back_auditd.sh:256 ../back_auditd.sh:328
+msgid "Parameter %s makes sense only when %s"
+msgstr "Параметр %s имеет смысл только когда %s"
+
+#: ../back_auditd.sh:285
+msgid "File %s does not exist or is not executable, so %s cannot be set as a dispatcher executable"
+msgstr "Файл %s не существует или не является исполняемым, поэтому %s не может быть установлен в качестве диспатчера аудита"
+
+#: ../back_auditd.sh:299
+msgid "%s requires %s to be configured"
+msgstr "Для %s должен быть настроен %s"
+
+#: ../back_auditd.sh:391 ../back_auditd.sh:405
+msgid "%s must be an integer between %s and %s"
+msgstr "%s должно быть целым числом от %s до %s"
+
+#: ../back_auditd.sh:427
+msgid "Errors occured when trying to understand how to configure auditd"
+msgstr "Невозможно понять, как настроить auditd, возникли ошибки"
+
+#: ../back_auditd.sh:470
+msgid "Error writing auditd config file %s"
+msgstr "Ошибка записи файла настроек auditd %s"
+
+#: ../back_auditd.sh:473
+msgid "Reboot to apply changes to auditd config"
+msgstr "Перезагрузите систему, чтобы настройки auditd вступили в силу"

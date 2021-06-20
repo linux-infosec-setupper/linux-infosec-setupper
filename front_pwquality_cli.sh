@@ -15,7 +15,7 @@ fi
 # Since the config may be standard from the package, it may not be parsed correctly.
 # We write our default config instead of the original one, so that the parsing works correctly
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
-	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
 fi
 

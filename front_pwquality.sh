@@ -16,7 +16,7 @@ PWQUALITY_FRONT=1
 # Since the config may be standard from the package, it may not be parsed correctly.
 # We write our default config instead of the original one, so that the parsing works correctly
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
-	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
 fi	
 
@@ -84,7 +84,7 @@ var="$(yad --title=$"linux-infosec-setupper" --form \
 # If we clicked on the "Load default" button, we decided to restore the settings.
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
-	cat "${SHARE_DIR_PWQUALITY}/pw_default" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 fi	
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
