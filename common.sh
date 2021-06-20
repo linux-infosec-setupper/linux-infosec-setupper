@@ -110,6 +110,7 @@ _validate_email(){
 
 _pw_parse_conf() {
 	while read -r line; do
+		if [[ "$line" =~ ^# ]] || [ -z "$line" ]; then continue; fi
 		case "$line" in
 			*=*) echo "${line// /}" ;;
 			*)   echo "${line}=1"   ;;
