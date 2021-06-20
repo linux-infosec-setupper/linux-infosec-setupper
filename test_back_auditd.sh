@@ -7,7 +7,7 @@ failed=0
 tmpdir="$(mktemp -d)"
 DESTDIR="$tmpdir"
 echo "TMP DIR: $tmpdir"
-. ./mikhailnov.sh
+. ./back_auditd.sh
 
 _exit(){
 	# Catch exit != 0 from functions (fatal errors)
