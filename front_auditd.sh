@@ -76,7 +76,7 @@ yad --plug=$_NUMBER --tabnum=1 --form \
 	--field=$"Name::LBL" "!" \
 	  --field=$"${_tag1}(String) Name${_tag2}" "${name:--}" \
 	--field=$"Max log file::LBL" "!" \
-	  --field=$"${_tag1}(Value) Max log file${_tag2}:NUM" "${max_log_file:--}!" \
+	  --field=$"${_tag1}(Value) Max log file${_tag2}:NUM" "${max_log_file:-1}!" \
 	--field=$"Action Mail Acct::LBL" "!" \
 	  --field=$"${_tag1}(String) Action Mail Acct${_tag2}:" "${action_mail_acct:--}" \
 	--field=$"Space left::LBL" "!" \
@@ -120,8 +120,8 @@ var="$(<"$_temp_file1")$(<"$_temp_file2")"
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
 [ -z "$var" ] && exit 0
-# The default delimiter in yad is |
 
+# The default delimiter in yad is |
 var2="$(while read -rd '|' line; do
 	echo $line
 done <<<"$var" | sed '/^$/d' | \
@@ -151,7 +151,13 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;22s/^/--tcp_listen_port /
 	    ;23s/^/--tcp_max_per_addr /
 	    ;24s/^/--systemd_allowed_ip_list /
-	    ;25s/^/--systemd_denied_ip_list /' | sed '/^-$/d' | tr '\n' ' ')"
+	    ;25s/^/--systemd_denied_ip_list /' | sed '/.* \-$/d')"
+####
+if [[ "$(echo "$var2" | grep -o -- "--distribute_network .*")" && "$(echo "$var2" | grep -o -- "--dispatcher .*")" ]]; then :; else
+	var2="$(echo "$var2" | sed '/^--distribute_network .*/d')"
+fi
+####
+var2="$(echo "$var2" | tr '\n' ' ')"
 set -e
 _mk_auditd_config $var2 || { error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
 _write_auditd_config || { error $"Unable to write to file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
