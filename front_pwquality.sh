@@ -20,7 +20,11 @@ PWQUALITY_FRONT=1
 if ! [[ -f "${VAR_DIR_PWQUALITY}/pw_changed" ]]; then
 	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
-fi	
+fi
+if [[ "$(grep "^#" "${DESTDIR}/etc/security/pwquality.conf")" ]]; then
+	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	install -D -m 444 /dev/null "${VAR_DIR_PWQUALITY}/pw_changed" || { error $"Unable to write to file %s" "${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }
+fi
 
 # In case the config was changed manually, or there were errors in it,
 # we check whether everything can be parsed correctly, and if not, it outputs an error
