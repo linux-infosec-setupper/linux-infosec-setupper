@@ -153,8 +153,14 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;24s/^/--systemd_allowed_ip_list /
 	    ;25s/^/--systemd_denied_ip_list /' | sed '/.* \-$/d')"
 ####
-if [[ "$(echo "$var2" | grep -o -- "--distribute_network .*")" && "$(echo "$var2" | grep -o -- "--dispatcher .*")" ]]; then :; else
+if ! [[ "$(echo "$var2" | grep -o -- "--distribute_network .*")" && "$(echo "$var2" | grep -o -- "--dispatcher .*")" ]]; then
 	var2="$(echo "$var2" | sed '/^--distribute_network .*/d')"
+fi
+if ! [[ "$(echo "$var2" | grep -o -- "--numlogs .*")" && "$(echo "$var2" | grep -o -- "--max_log_file_action rotate")" ]]; then
+	var2="$(echo "$var2" | sed '/^--numlogs .*/d')"
+fi
+if ! [[ "$(echo "$var2" | grep -o -- "--freq .*")" && "$(echo "$var2" | grep -o -- "--flush incremental_async")" ]]; then
+	var2="$(echo "$var2" | sed '/^--freq .*/d')"
 fi
 ####
 var2="$(echo "$var2" | tr '\n' ' ')"
