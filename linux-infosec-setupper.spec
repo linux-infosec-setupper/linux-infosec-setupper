@@ -3,7 +3,7 @@ Summary: CLI and GUI utilities to setup information security-related parts of Li
 License: GPLv3
 Group: System/Configuration/Other
 Version: 0.1
-Release: 1
+Release: 2
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: bash
@@ -50,6 +50,23 @@ CLI and backend to setup auditd configs
 %{_datadir}/linux-infosec-setupper/audit/back_auditd.sh
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper/audit
 %ghost /var/lib/linux-infosec-setupper/audit/auditd-conf.sh
+
+#-----------------------------------------------------------------------------------
+
+%package auditd-gui
+Summary: GUI to setup auditd configs
+Group: System/Configuration/Other
+Requires: %{name}-auditd-cli = %{version}-%{release}
+Requires: yad
+Recommends: polkit
+
+%description auditd-gui
+GUI to setup auditd configs
+
+%files auditd-gui
+%{_sbindir}/linux-infosec-setupper-auditd-gui
+%{_bindir}/linux-infosec-setupper-auditd-gui
+%{_datadir}/polkit-1/actions/org.nixtux.pkexec.linux-infosec-setupper-auditd-gui.policy
 
 #-----------------------------------------------------------------------------------
 
