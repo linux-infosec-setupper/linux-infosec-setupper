@@ -6,10 +6,8 @@ set -e
 if [ -f ./common.sh ] && [ -f "$0" ]
 then
 	source common.sh
-	source parse_pwquality.sh
 else
 	source /usr/share/linux-infosec-setupper/common.sh
-	source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
 fi
 
 PWQUALITY_FRONT=1

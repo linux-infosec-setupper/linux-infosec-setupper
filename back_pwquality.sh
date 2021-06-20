@@ -8,7 +8,6 @@ then
 else
 	source /usr/share/linux-infosec-setupper/common.sh
 fi
-source "${SHARE_DIR_PWQUALITY}/parse_pwquality.sh"
 
 _mk_pwquality_conf() {
 local failed=0
