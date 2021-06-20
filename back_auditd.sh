@@ -9,8 +9,6 @@ else
 	source /usr/share/linux-infosec-setupper/common.sh
 fi
 
-TEXTDOMAIN=linux-infosec-setupper-back_auditd
-
 # make temporary files not accessible to non-root
 # like auditd config is not accessible
 umask 0077

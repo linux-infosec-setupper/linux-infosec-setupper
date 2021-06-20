@@ -1,5 +1,5 @@
 all:
-	cd po/back_auditd ; msgfmt -o linux-infosec-setupper-back_auditd.mo ru.po
+	@echo Run make install
 
 install:
 	# bin is for scripts which will run sbin/* via pkexec
@@ -18,7 +18,7 @@ install:
 	chmod -R 0700 $(DESTDIR)/var/lib/linux-infosec-setupper
 	
 	mkdir -p $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES
-	install -m0644 po/back_auditd/linux-infosec-setupper-back_auditd.mo $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES
+	msgfmt -o $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES/linux-infosec-setupper.mo po/ru.po
 
 rpm:
 	# https://stackoverflow.com/a/1909390

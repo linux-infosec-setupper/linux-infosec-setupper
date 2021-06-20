@@ -31,6 +31,7 @@ Common parts for subpackages of %{name}
 %dir %{_datadir}/linux-infosec-setupper
 %{_datadir}/linux-infosec-setupper/common.sh
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper
+%lang(ru) %{_datadir}/locale/ru/LC_MESSAGES/linux-infosec-setupper.mo
 
 #-----------------------------------------------------------------------------------
 
@@ -48,7 +49,6 @@ CLI and backend to setup auditd configs
 %dir %{_datadir}/linux-infosec-setupper/audit
 %{_datadir}/linux-infosec-setupper/audit/back_auditd.sh
 %dir %attr(0700,root,root) /var/lib/linux-infosec-setupper/audit
-%lang(ru) %{_datadir}/locale/ru/LC_MESSAGES/linux-infosec-setupper-back_auditd.mo
 %ghost /var/lib/linux-infosec-setupper/audit/auditd-conf.sh
 
 #-----------------------------------------------------------------------------------
