@@ -341,7 +341,7 @@ _mk_auditd_config(){
 					tmp_space_left="$(echo "$tmp_space_left" | sed -e 's,%$,,')"
 					_check_argument_is_non_negative_number "$tmp_space_left" "space_left" || failed=1
 				fi
-				_check_argument_is_non_negative_number "$space_left" "space_left" || failed=1
+				_check_argument_is_non_negative_number "$tmp_space_left" "space_left" || failed=1
 				space_left="$1"
 				unset tmp_space_left
 			;;
