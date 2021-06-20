@@ -74,7 +74,7 @@ GUI to setup auditd configs
 Summary: CLI and backend to setup pwquality configs
 Group: System/Configuration/Other
 Requires: %{name}-common = %{version}-%{release}
-%if 0%{mdvver}
+%if 0%{?mdvver}
 Requires: pam_pwquality
 Requires: libpwquality-common
 %else
