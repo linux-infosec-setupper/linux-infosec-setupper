@@ -1,7 +1,13 @@
 #!/bin/bash
 set -e
 
-source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh" # || . ./common.sh
+# detect running from git tree
+if [ -f ./common.sh ] && [ -f "$0" ]
+then
+	source common.sh
+else
+	source /usr/share/linux-infosec-setupper/common.sh
+fi
 
 # $1 - action
 # $2 - param name

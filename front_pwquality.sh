@@ -1,6 +1,12 @@
 #!/bin/bash
 
-source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
+# detect running from git tree
+if [ -f ./common.sh ] && [ -f "$0" ]
+then
+	source common.sh
+else
+	source /usr/share/linux-infosec-setupper/common.sh
+fi
 
 PWQUALITY_FRONT=1
 
