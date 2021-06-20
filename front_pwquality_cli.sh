@@ -1,6 +1,5 @@
 #!/bin/bash
-
-source "${DESTDIR}/usr/share/linux-infosec-setupper/common.sh"
+set -e
 
 # detect running from git tree
 if [ -f ./common.sh ] && [ -f "$0" ]
