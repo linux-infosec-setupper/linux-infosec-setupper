@@ -34,6 +34,8 @@ fi
 
 case "$1" in -h|--help|h|help)
 echo $"Usage: #NAME# --[OPTIONS...]"
+echo $"  example: #NAME# --difok 6"
+echo $"  example: #NAME# d 6"
 echo $"#NAME# allows you to manage the file configuration for pwquality in the cli option. A GUI version is also available: #NAME2#"
 echo ''
 echo $"  Options:"
