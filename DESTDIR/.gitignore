@@ -1,2 +1,0 @@
-etc/audit/auditd.conf
-var/lib/linux-infosec-setupper/audit/auditd-conf.sh
