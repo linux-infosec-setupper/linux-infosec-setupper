@@ -18,7 +18,7 @@ BuildRequires: gettext
 %package common
 Summary: Common parts for subpackages of %{name}
 Group: System/Configuration/Other
-Requires: awk
+Requires: gawk
 Requires: bash
 Requires: coreutils
 Requires: grep
