@@ -116,3 +116,7 @@ _pw_parse_conf() {
 		esac
 	done < "${DESTDIR}/etc/security/pwquality.conf"
 }
+_yad_error() {
+	yad --form --image=dialog-error --text="Error" --title="Error" --field="$@:LBL" --button="yad-close:1" --width=100 --height=100 --scroll
+	return 1
+}

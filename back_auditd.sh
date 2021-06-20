@@ -166,6 +166,7 @@ _mk_auditd_config(){
 			"--local_events" ) shift;
 				_check_argument_is_boolean "$1" "local_events" || failed=1
 				local_events="$1"
+				shift;
 			;;
 			# We recommend using default /var/log/audit/audit.log to avoid mess
 			# with SELinux, log rotation (auditd rotates the log by itself by default

@@ -24,13 +24,13 @@ fi
 
 # In case the config was changed manually, or there were errors in it,
 # we check whether everything can be parsed correctly, and if not, it outputs an error
-while read -r line; do declare "$line" || { error $"Unable to parse %s correctly; execute \n%s" "${VAR_DIR_PWQUALITY}/pw_changed" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
+while read -r line; do declare "$line" || { _yad_error $"Unable to parse %s correctly; execute \n%s" "${VAR_DIR_PWQUALITY}/pw_changed" "rm ${VAR_DIR_PWQUALITY}/pw_changed"; exit 1; }; done < <(_pw_parse_conf)
 
 # For yad checkboxes, the words TRUE or FALSE are required.
 # We change the following parameters 0 to FALSE and 1 to TRUE
 for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforcing; do
 	# The variables have the same name as the lines in the config
-	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { error $"Unable to set variable %s" "$i"; exit 1; }
+	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { _yad_error $"Unable to set variable %s" "$i"; exit 1; }
 done
 
 _tag1="<span weight='bold'>"
@@ -86,7 +86,7 @@ var="$(yad --title="linux-infosec-setupper: pwquality" --form \
 # If we clicked on the "Load default" button, we decided to restore the settings.
 # The exit code after clicking on this button is 3. We restore the config if we clicked on this button
 if [ "$_status" == 3 ]; then
-	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+	cat "$PW_DEFAULT" > "${DESTDIR}/etc/security/pwquality.conf" || { _yad_error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
 fi	
 
 # If we decide to undo the changes and not change anything, the var variable will be empty.
@@ -117,4 +117,4 @@ done <<<"$var" | sed '/^$/d' | \
 	    ;17s/^/--enforce_for_root /
 	    ;18s/^/--local_users_only /' | tr '\n' ' ')"
 
-_mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf" || { error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
+_mk_pwquality_conf $var2 > "${DESTDIR}/etc/security/pwquality.conf" || { _yad_error $"Unable to write to file %s" "${DESTDIR}/etc/security/pwquality.conf"; exit 1; }
