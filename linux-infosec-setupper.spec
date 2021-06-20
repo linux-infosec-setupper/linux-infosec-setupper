@@ -3,7 +3,7 @@ Summary: CLI and GUI utilities to setup information security-related parts of Li
 License: GPLv3
 Group: System/Configuration/Other
 Version: 0.1
-Release: 1
+Release: 2
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: bash
@@ -53,11 +53,28 @@ CLI and backend to setup auditd configs
 
 #-----------------------------------------------------------------------------------
 
+%package auditd-gui
+Summary: GUI to setup auditd configs
+Group: System/Configuration/Other
+Requires: %{name}-auditd-cli = %{version}-%{release}
+Requires: yad
+Recommends: polkit
+
+%description auditd-gui
+GUI to setup auditd configs
+
+%files auditd-gui
+%{_sbindir}/linux-infosec-setupper-auditd-gui
+%{_bindir}/linux-infosec-setupper-auditd-gui
+%{_datadir}/polkit-1/actions/org.nixtux.pkexec.linux-infosec-setupper-auditd-gui.policy
+
+#-----------------------------------------------------------------------------------
+
 %package pwquality-cli
 Summary: CLI and backend to setup pwquality configs
 Group: System/Configuration/Other
 Requires: %{name}-common = %{version}-%{release}
-%if 0%{mdvver}
+%if 0%{?mdvver}
 Requires: pam_pwquality
 Requires: libpwquality-common
 %else

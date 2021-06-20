@@ -9,6 +9,7 @@ install:
 	install -m0755 front_auditd_cli.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-auditd-cli
 	install -m0755 front_pwquality_cli.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-pwquality-cli
 	install -m0755 front_pwquality.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-pwquality-gui
+	install -m0755 front_auditd.sh $(DESTDIR)/usr/sbin/linux-infosec-setupper-auditd-gui
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/audit
 	mkdir -p $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality
@@ -18,7 +19,7 @@ install:
 	install -m0644 back_pwquality.sh $(DESTDIR)/usr/share/linux-infosec-setupper/pwquality/back_pwquality.sh
 	mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper
 	mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper/audit
-	#mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper/pwquality
+	mkdir -p $(DESTDIR)/var/lib/linux-infosec-setupper/pwquality
 	chmod -R 0700 $(DESTDIR)/var/lib/linux-infosec-setupper
 	
 	mkdir -p $(DESTDIR)/usr/share/locale/ru/LC_MESSAGES
@@ -26,7 +27,9 @@ install:
 
 	mkdir -p $(DESTDIR)/usr/share/polkit-1/actions
 	install -m0644 polkit/org.nixtux.pkexec.linux-infosec-setupper-pwquality-gui.policy $(DESTDIR)/usr/share/polkit-1/actions/
+	install -m0644 polkit/org.nixtux.pkexec.linux-infosec-setupper-auditd-gui.policy $(DESTDIR)/usr/share/polkit-1/actions/
 	install -m0755 polkit/linux-infosec-setupper-pwquality-gui.sh $(DESTDIR)/usr/bin/linux-infosec-setupper-pwquality-gui
+	install -m0755 polkit/linux-infosec-setupper-auditd-gui.sh $(DESTDIR)/usr/bin/linux-infosec-setupper-auditd-gui
 
 rpm:
 	# https://stackoverflow.com/a/1909390

@@ -15,11 +15,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
-#: ../back_auditd.sh:32
+#: ../back_auditd.sh:32 ../back_auditd.sh:30
 msgid "Entered %s=exec /path/to/script does not contain a path to script"
 msgstr "Введенное значение %s=exec /путь/к/скрипту не содержит путь к скрипту"
 
-#: ../back_auditd.sh:35
+#: ../back_auditd.sh:35 ../back_auditd.sh:33
 msgid ""
 "%s=exec* can have only one agrument — path to script, example: %s=exec /path/"
 "to/script"
@@ -27,24 +27,27 @@ msgstr ""
 "У %s=exec* может быть только один аргумент — путь к скрипту, например: "
 "%s=exec /путь/к/скрипту"
 
-#: ../back_auditd.sh:40
+#: ../back_auditd.sh:40 ../back_auditd.sh:38
 msgid "Script %s is not executable"
 msgstr "Скрипт %s не является выполняемым"
 
 #: ../back_auditd.sh:46 ../back_auditd.sh:226 ../back_auditd.sh:253
-#: ../back_auditd.sh:281 ../back_auditd.sh:325
+#: ../back_auditd.sh:281 ../back_auditd.sh:325 ../back_auditd.sh:44
+#: ../back_auditd.sh:219 ../back_auditd.sh:244 ../back_auditd.sh:270
+#: ../back_auditd.sh:311
 msgid "Possible values of %s are: %s"
 msgstr "Возможны следующие значения %s: %s"
 
 #: ../back_auditd.sh:80 ../back_auditd.sh:441 ../back_auditd.sh:478
+#: ../back_auditd.sh:78 ../back_auditd.sh:417 ../back_auditd.sh:454
 msgid "Error creating directory %s"
 msgstr "Ошибка создания каталога %s"
 
-#: ../back_auditd.sh:111
+#: ../back_auditd.sh:111 ../back_auditd.sh:109
 msgid "Error copying systemd override file %s to %s"
 msgstr "Ошибка копирования файла дополнительных настроек systemd %s в %s"
 
-#: ../back_auditd.sh:118
+#: ../back_auditd.sh:118 ../back_auditd.sh:116
 msgid ""
 "Systemd unit file auditd.service with setted up packet filtering has not "
 "passed verification!"
@@ -52,23 +55,24 @@ msgstr ""
 "Файл унита systemd auditd.service с настроенной фильтрацией сетевого трафика "
 "не прошел проверку на правильность синтаксиса!"
 
-#: ../back_auditd.sh:119
+#: ../back_auditd.sh:119 ../back_auditd.sh:117
 msgid "The error was:"
 msgstr "Ошибка была следующей:"
 
-#: ../back_auditd.sh:181
+#: ../back_auditd.sh:181 ../back_auditd.sh:179
 msgid "Directory %s does not exist"
 msgstr "Каталог %s не существует"
 
-#: ../back_auditd.sh:197
+#: ../back_auditd.sh:197 ../back_auditd.sh:193
 msgid "Value of %s must be %s or %s"
 msgstr "Значением %s должно быть %s или %s"
 
 #: ../back_auditd.sh:239 ../back_auditd.sh:266 ../back_auditd.sh:338
+#: ../back_auditd.sh:230 ../back_auditd.sh:256 ../back_auditd.sh:323
 msgid "Parameter %s makes sense only when %s"
 msgstr "Параметр %s имеет смысл только когда %s"
 
-#: ../back_auditd.sh:295
+#: ../back_auditd.sh:295 ../back_auditd.sh:283
 msgid ""
 "File %s does not exist or is not executable, so %s cannot be set as a "
 "dispatcher executable"
@@ -76,23 +80,24 @@ msgstr ""
 "Файл %s не существует или не является исполняемым, поэтому %s не может быть "
 "установлен в качестве диспатчера аудита"
 
-#: ../back_auditd.sh:309
+#: ../back_auditd.sh:309 ../back_auditd.sh:296
 msgid "%s requires %s to be configured"
 msgstr "Для %s должен быть настроен %s"
 
-#: ../back_auditd.sh:401 ../back_auditd.sh:415
+#: ../back_auditd.sh:401 ../back_auditd.sh:415 ../back_auditd.sh:379
+#: ../back_auditd.sh:392
 msgid "%s must be an integer between %s and %s"
 msgstr "%s должно быть целым числом от %s до %s"
 
-#: ../back_auditd.sh:437
+#: ../back_auditd.sh:437 ../back_auditd.sh:413
 msgid "Errors occured when trying to understand how to configure auditd"
 msgstr "Невозможно понять, как настроить auditd, возникли ошибки"
 
-#: ../back_auditd.sh:482
+#: ../back_auditd.sh:482 ../back_auditd.sh:458
 msgid "Error writing auditd config file %s"
 msgstr "Ошибка записи файла настроек auditd %s"
 
-#: ../back_auditd.sh:485
+#: ../back_auditd.sh:485 ../back_auditd.sh:461
 msgid "Reboot to apply changes to auditd config"
 msgstr "Перезагрузите систему, чтобы настройки auditd вступили в силу"
 
@@ -111,32 +116,32 @@ msgstr "полученные параметры неправильны. Ожид
 msgid "0 or 1"
 msgstr "0 или 1"
 
-#: ../common.sh:49
+#: ../common.sh:49 ../common.sh:50
 msgid "Argument to %s must be a number"
 msgstr "Значением %s должно быть число"
 
-#: ../common.sh:58
+#: ../common.sh:58 ../common.sh:59
 #, fuzzy
 msgid "Argument to %s must be greater than %s"
 msgstr "Значение %s должно быть больше значения %s"
 
-#: ../common.sh:69
+#: ../common.sh:69 ../common.sh:70
 msgid "Argument to %s must be a string without spaces"
 msgstr "Значение %s должно быть строкой без пробелов"
 
-#: ../common.sh:83
+#: ../common.sh:83 ../common.sh:84
 msgid "Value of %s is empty, set yes or no"
 msgstr "Значение %s пусто, задайте yes или no"
 
-#: ../common.sh:87
+#: ../common.sh:87 ../common.sh:88
 msgid "String %s is not a boolean, set yes or no"
 msgstr "Строка %s не является булеановым значением, задайте yes или no"
 
-#: ../common.sh:98
+#: ../common.sh:98 ../common.sh:99
 msgid "Value of %s must be a non-negative number"
 msgstr "Значение %s должно быть целым числом больше нуля"
 
-#: ../common.sh:105
+#: ../common.sh:105 ../common.sh:106
 msgid "%s is not a correct email"
 msgstr "%s не является валидным адресом электропочты"
 
@@ -155,6 +160,8 @@ msgstr "Поддерживаемые параметров auditd и их зна�
 #: ../front_pwquality_cli.sh:18 ../front_pwquality_cli.sh:19
 #: ../front_pwquality_cli.sh:83 ../front_pwquality.sh:19
 #: ../front_pwquality.sh:20 ../front_pwquality.sh:87 ../front_pwquality.sh:119
+#: ../front_auditd.sh:156 ../front_auditd.sh:157 ../front_pwquality.sh:21
+#: ../front_pwquality.sh:22 ../front_pwquality.sh:89 ../front_pwquality.sh:120
 msgid "Unable to write to file %s"
 msgstr "Невозможно записать в файл %s"
 
@@ -179,8 +186,8 @@ msgid ""
 "#NAME# allows you to manage the file configuration for pwquality in the cli "
 "option. A GUI version is also available: #NAME2#"
 msgstr ""
-"#NAME# позволяет управлять конфигом pwquality через cli. "
-"Также доступна гарфическая версия: #NAME2#"
+"#NAME# позволяет управлять конфигом pwquality через cli. Также доступна "
+"гарфическая версия: #NAME2#"
 
 #: ../front_pwquality_cli.sh:47
 msgid "  Options:"
@@ -293,146 +300,149 @@ msgid ""
 "users that are not present in the /etc/passwd file"
 msgstr ""
 
-#: ../front_pwquality.sh:31
+#: ../front_pwquality.sh:31 ../front_auditd.sh:25 ../front_pwquality.sh:33
 msgid "Unable to set variable %s"
 msgstr "Невозможно установить переменную %s"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_auditd.sh:109
 msgid "linux-infosec-setupper"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "<span size='xx-large' weight='bold'>Password policies setup</span>"
-msgstr "<span size='xx-large' weight='bold'>Настройка политики сложности паролей</span>"
+msgstr ""
+"<span size='xx-large' weight='bold'>Настройка политики сложности паролей</"
+"span>"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_auditd.sh:110 ../front_pwquality.sh:39
 msgid "Load defaults!view-refresh:3"
 msgstr "Сбросить настройки!view-refresh:3"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_auditd.sh:110 ../front_pwquality.sh:39
 msgid "yad-save:0"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_auditd.sh:110 ../front_pwquality.sh:39
 msgid "yad-close:1"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "Number of characters in the new password that must not be present in the old "
 "password::LBL"
 msgstr ""
-"Количество символов из нового пароля, которых не должно быть в старом пароле::LBL"
+"Количество символов из нового пароля, которых не должно быть в старом "
+"пароле::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (difok)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Minimum acceptable size for the new password::LBL"
 msgstr "Минимальный допустимый размер нового пароля::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (minlen)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "The maximum credit for having digits in the new password::LBL"
 msgstr "Максималньый кредит на цифры в новом пароле::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (dcredit)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The maximum credit for having uppercase characters in the new password::LBL"
 msgstr "Максимальный кредит на заглавные буквы в новом пароле::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (ucredit)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The maximum credit for having lowercase characters in the new password::LBL"
 msgstr "Максимальный кредит на строчные буквы в новом пароле::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (lcredit)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "The maximum credit for having other characters in the new password::LBL"
 msgstr "Максимальный кредит на осталньые символы в новом пароле"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (ocredit)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The minimum number of required classes of characters for the new password::"
 "LBL"
 msgstr "Минимальное необходимое кол-во типов символов в новом пароле::LBL"
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (minclass)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The maximum number of allowed same consecutive charatcers in the new "
 "password::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (maxrepeat)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The maximum length of monotonic chatacter sequences in the new password::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (maxsequence)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "The maximum number of allowed consecutive characters of the same class in "
 "the new password::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (maxclassrepeat)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "Check whether the password contains a substring of at least N length::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (usersubstr)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Prompt the user at most N times before returning error::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (retry)${_tag2}:NUM"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "Check whether the words longer than 3 characters from the GECO field of "
 "passwd::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (gecoscheck):CHK"
 msgstr ""
 
@@ -440,42 +450,270 @@ msgstr ""
 msgid "Check whether the password macthices a word in a dictionary::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (dictcheck):CHK"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Check whether the password contains the user name in some form::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (usercheck):CHK"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Reject the password if it fails the checks::LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (enforcing):CHK"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "Return error on failed check even if the user changing the password is root::"
 "LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (enforce_for_root):CHK"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid ""
 "Not test the password quality for users that are not present in /etc/passwd::"
 "LBL"
 msgstr ""
 
-#: ../front_pwquality.sh:37
+#: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "Status (local_users_only):CHK"
+msgstr ""
+
+#: ../front_auditd.sh:16 ../front_auditd.sh:115
+msgid "Unable to read file %s"
+msgstr "Невозможно прочитать файл %s"
+
+#: ../front_auditd.sh:45
+msgid "<span size='xx-large' weight='bold'>Audit daemon settings</span>"
+msgstr ""
+"<span size='xx-large' weight='bold'>Настройка аудита</"
+"span>"
+
+#: ../front_auditd.sh:48
+msgid "Local events::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:49
+msgid "(Status) Local events:CHK"
+msgstr ""
+
+#: ../front_auditd.sh:50
+msgid "Log file::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:51
+msgid "${_tag1}(String) Log file${_tag2}:SFL"
+msgstr ""
+
+#: ../front_auditd.sh:52
+msgid "Write logs::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:53
+msgid "(Status) Write logs:CHK"
+msgstr ""
+
+#: ../front_auditd.sh:54
+msgid "Log format::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:55
+msgid "${_tag1}(Value) Log format${_tag2}:CB"
+msgstr ""
+
+#: ../front_auditd.sh:56
+msgid "Log group::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:57
+msgid "${_tag1}(String) Log group${_tag2}"
+msgstr ""
+
+#: ../front_auditd.sh:58
+msgid "Priority boost::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:59
+msgid "${_tag1}(Value) Priority boost${_tag2}:NUM"
+msgstr ""
+
+#: ../front_auditd.sh:60
+msgid "Flush::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:61
+msgid "(Value) Flush:CB"
+msgstr ""
+
+#: ../front_auditd.sh:62
+msgid "Freq::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:63
+msgid "${_tag1}(Value) Freq${_tag2}:NUM"
+msgstr ""
+
+#: ../front_auditd.sh:64
+msgid "Max log fileaction::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:65
+msgid "${_tag1}(Value) Max log fileaction${_tag2}:CB"
+msgstr ""
+
+#: ../front_auditd.sh:66
+msgid "Num logs::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:67
+msgid "${_tag1}(Value) Num logs${_tag2}:NUM"
+msgstr ""
+
+#: ../front_auditd.sh:68
+msgid "Disp Qos::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:69
+msgid "${_tag1}(Value) Disp Qos${_tag2}:CB"
+msgstr ""
+
+#: ../front_auditd.sh:70
+msgid "Dispatcher::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:71
+msgid "${_tag1}(String) dispatcher${_tag2}:SFL"
+msgstr ""
+
+#: ../front_auditd.sh:72
+msgid "Distribute network::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:73
+msgid "(Status) Distribute network:CHK"
+msgstr ""
+
+#: ../front_auditd.sh:74
+msgid "Name format::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:75
+msgid "${_tag1}(Value) Name format${_tag2}:CB"
+msgstr ""
+
+#: ../front_auditd.sh:76
+msgid "Name::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:77
+msgid "${_tag1}(String) Name${_tag2}"
+msgstr ""
+
+#: ../front_auditd.sh:78
+msgid "Max log file::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:79
+msgid "${_tag1}(Value) Max log file${_tag2}:NUM"
+msgstr ""
+
+#: ../front_auditd.sh:80
+msgid "Action Mail Acct::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:81
+msgid "${_tag1}(String) Action Mail Acct${_tag2}:"
+msgstr ""
+
+#: ../front_auditd.sh:82
+msgid "Space left::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:83
+msgid "${_tag1}(Value) Space left${_tag2}:NUM"
+msgstr ""
+
+#: ../front_auditd.sh:84
+msgid "Space left action::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:85
+msgid "${_tag1}(String) Space left action${_tag2}:CBE"
+msgstr ""
+
+#: ../front_auditd.sh:86
+msgid "Disk full action::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:87
+msgid "${_tag1}(String) Disk full action${_tag2}:CBE"
+msgstr ""
+
+#: ../front_auditd.sh:88
+msgid "Disk error action::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:89
+msgid "${_tag1}(String) Disk error action${_tag2}:CBE"
+msgstr ""
+
+#: ../front_auditd.sh:94
+msgid "<span size='xx-large' weight='bold'>Network server</span>"
+msgstr ""
+"<span size='xx-large' weight='bold'>Сетевой сервер</"
+"span>"
+
+#: ../front_auditd.sh:97
+msgid "Tcp listen port::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:98
+msgid "${_tag1}(Value) Tcp listen port${_tag2}::NUM"
+msgstr ""
+
+#: ../front_auditd.sh:99
+msgid "Tcp max per addr::LBL"
+msgstr ""
+
+#: ../front_auditd.sh:100
+msgid "${_tag1}(Value) Tcp max per addr${_tag2}::NUM"
+msgstr ""
+
+#: ../front_auditd.sh:101
+msgid "Systemd firewalling params:LBL"
+msgstr ""
+
+#: ../front_auditd.sh:102
+msgid "${_tag1}(Value) Allowed IPs${_tag2}::TXT"
+msgstr ""
+
+#: ../front_auditd.sh:103
+msgid "${_tag1}(Value) Denied IPs${_tag2}::TXT"
+msgstr ""
+
+#: ../front_auditd.sh:106
+msgid "Audit"
+msgstr "Аудит"
+
+#: ../front_auditd.sh:106
+msgid "Network"
+msgstr "Сетевой сервер"
+
+#: ../front_pwquality.sh:27
+msgid "Unable to parse %s correctly; execute \\n%s"
+msgstr ""
+
+#: ../front_pwquality.sh:39
+msgid "Check whether the password matches a word in a dictionary::LBL"
 msgstr ""
