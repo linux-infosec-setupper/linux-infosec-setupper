@@ -374,7 +374,7 @@ msgstr ""
 
 #: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "The maximum credit for having other characters in the new password::LBL"
-msgstr "Максимальный кредит на осталньые символы в новом пароле"
+msgstr "Максимальный кредит на остальные символы в новом пароле::LBL"
 
 #: ../front_pwquality.sh:37 ../front_pwquality.sh:39
 msgid "${_tag1}Value (ocredit)${_tag2}:NUM"
