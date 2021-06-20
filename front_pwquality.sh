@@ -23,6 +23,10 @@ for i in gecoscheck enforce_for_root local_users_only dictcheck usercheck enforc
 	# The variables have the same name as the lines in the config
 	eval 'if [[ $'$i' == 1 ]]; then declare $i=TRUE; else declare $i=FALSE; fi' || { error $"Unable to set variable %s" "$i"; exit 1; }
 done
+
+_tag1="<span weight='bold'>"
+_tag2="</span>"
+
 var="$(yad --title=$"linux-infosec-setupper" --form \
 	--text-align=center \
 	--bool-fmt=T \
@@ -32,42 +36,42 @@ var="$(yad --title=$"linux-infosec-setupper" --form \
 	--width=800 \
 	--height=800 \
 	--button=$"Load defaults!view-refresh:3" --button=$"yad-save:0" --button=$"yad-close:1" \
-	--field=$"<span weight='bold'>Number of characters in the new password that must not be present in the old password</span>::LBL" "!" \
-	  --field=$"Value (difok):NUM" "$difok!1..9999!1" \
-	--field=$"Minimum acceptable size for the new password:LBL" "!" \
-	  --field=$"Value (minlen):NUM" "$minlen!6..9999!1" \
+	--field=$"Number of characters in the new password that must not be present in the old password::LBL" "!" \
+	  --field=$"${_tag1}Value (difok)${_tag2}:NUM" "$difok!1..9999!1" \
+	--field=$"Minimum acceptable size for the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (minlen)${_tag2}:NUM" "$minlen!6..9999!1" \
 	--field=$"The maximum credit for having digits in the new password::LBL" "!" \
-	  --field=$"Value (dcredit):NUM" "$dcredit!-9999..+9999!1" \
-	--field=$"The maximum credit for having uppercase characters in the new password:LBL" "!" \
-	  --field=$"Value (ucredit):NUM" "$ucredir!-9999..+9999!1" \
-	--field=$"The maximum credit for having lowercase characters in the new password:LBL" "!" \
-	  --field=$"Value (lcredit):NUM" "$lcredir!-9999..+9999!1" \
-	--field=$"The maximum credit for having other characters in the new password:LBL" "!" \
-	  --field=$"Value (ocredit):NUM" "$ocredir!-9999..+9999!1" \
-	--field=$"The minimum number of required classes of characters for the new password:LBL" "!" \
-	  --field=$"Value (minclass):NUM" "$minclass!0..9999!1" \
-	--field=$"The maximum number of allowed same consecutive charatcers in the new password:LBL" "!" \
-	  --field=$"Value (maxrepeat):NUM" "$maxrepeat!0..9999!1" \
-	--field=$"The maximum length of monotonic chatacter sequences in the new password:LBL" "!" \
-	  --field=$"Value (maxsequence):NUM" "$maxsequence!0..9999!1" \
-	--field=$"The maximum number of allowed consecutive characters of the same class in the new password:LBL" "!" \
-	  --field=$"Value (maxclassrepeat):NUM" "$maxclassrepeat!0..9999!1" \
-	--field=$"Check whether the password contains a substring of at least N length:LBL" "!" \
-	  --field=$"Value (usersubstr):NUM" "$usersubstr:0..9999:1" \
-	--field=$"Prompt the user at most N times before returning error:LBL" "!" \
-	  --field=$"Value (retry):NUM" "$retry:0..9999:1" \
-	--field=$"Check whether the words longer than 3 characters from the GECO field of passwd:LBL" "!" \
+	  --field=$"${_tag1}Value (dcredit)${_tag2}:NUM" "$dcredit!-9999..+9999!1" \
+	--field=$"The maximum credit for having uppercase characters in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (ucredit)${_tag2}:NUM" "$ucredir!-9999..+9999!1" \
+	--field=$"The maximum credit for having lowercase characters in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (lcredit)${_tag2}:NUM" "$lcredir!-9999..+9999!1" \
+	--field=$"The maximum credit for having other characters in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (ocredit)${_tag2}:NUM" "$ocredir!-9999..+9999!1" \
+	--field=$"The minimum number of required classes of characters for the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (minclass)${_tag2}:NUM" "$minclass!0..9999!1" \
+	--field=$"The maximum number of allowed same consecutive charatcers in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (maxrepeat)${_tag2}:NUM" "$maxrepeat!0..9999!1" \
+	--field=$"The maximum length of monotonic chatacter sequences in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (maxsequence)${_tag2}:NUM" "$maxsequence!0..9999!1" \
+	--field=$"The maximum number of allowed consecutive characters of the same class in the new password::LBL" "!" \
+	  --field=$"${_tag1}Value (maxclassrepeat)${_tag2}:NUM" "$maxclassrepeat!0..9999!1" \
+	--field=$"Check whether the password contains a substring of at least N length::LBL" "!" \
+	  --field=$"${_tag1}Value (usersubstr)${_tag2}:NUM" "$usersubstr:0..9999:1" \
+	--field=$"Prompt the user at most N times before returning error::LBL" "!" \
+	  --field=$"${_tag1}Value (retry)${_tag2}:NUM" "$retry:0..9999:1" \
+	--field=$"Check whether the words longer than 3 characters from the GECO field of passwd::LBL" "!" \
 	  --field=$"Status (gecoscheck):CHK" "$gecoscheck" \
-	--field=$"Check whether the password macthices a word in a dictionary:LBL" "!" \
+	--field=$"Check whether the password macthices a word in a dictionary::LBL" "!" \
 	  --field=$"Status (dictcheck):CHK" "$dictcheck" \
-	--field=$"Check whether the password contains the user name in some form:LBL" "!" \
+	--field=$"Check whether the password contains the user name in some form::LBL" "!" \
 	  --field=$"Status (usercheck):CHK" "$usercheck" \
-	--field=$"Reject the password if it fails the checks:LBL" "!" \
+	--field=$"Reject the password if it fails the checks::LBL" "!" \
 	  --field=$"Status (enforcing):CHK" "$enforcing" \
-	--field=$"Return error on failed check even if the user changing the password is root:LBL" "!" \
+	--field=$"Return error on failed check even if the user changing the password is root::LBL" "!" \
 	  --field=$"Status (enforce_for_root):CHK" "$enforce_for_root" \
-	--field=$"Not test the password quality for users that are not present in /etc/passwd:LBL" "!" \
-	--field=$"Status (local_users_only):CHK" "$local_users_only")"
+	--field=$"Not test the password quality for users that are not present in /etc/passwd::LBL" "!" \
+	  --field=$"Status (local_users_only):CHK" "$local_users_only")"
 	_status="$?"
 
 # If we clicked on the "Load default" button, we decided to restore the settings.
