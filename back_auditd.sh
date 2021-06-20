@@ -97,6 +97,8 @@ do
 	echo "IPAddressDeny=$i"
 done)
 EOF
+	systemd_allowed_ip_list="$IPAddressAllow"
+	systemd_denied_ip_list="$IPAddressDeny"
 	# Make it work inside e.g. Anaconda module where $DESTDIR is not empty
 	# probably by copying the file to the root of the LiveCD.
 	# Detection of being run from Anaconda here is a prototype.
@@ -151,6 +153,8 @@ _audit_variables(){
 	disk_error_action="halt"
 	tcp_listen_port=""
 	tcp_max_per_addr=""
+	systemd_allowed_ip_list=""
+	systemd_denied_ip_list=""
 }
 
 _mk_auditd_config(){
@@ -463,6 +467,8 @@ disk_full_action="$disk_full_action"
 disk_error_action="$disk_error_action"
 tcp_listen_port="$tcp_listen_port"
 tcp_max_per_addr="$tcp_max_per_addr"
+systemd_allowed_ip_list="$systemd_allowed_ip_list"
+systemd_denied_ip_list="$systemd_denied_ip_list"
 EOF
 }
 
@@ -472,7 +478,7 @@ _write_auditd_config(){
 		error $"Error creating directory %s" "$config_dir"
 		return 1
 	fi
-	if ! sed "${VAR_DIR_AUDIT}/auditd-conf.sh" -e 's,=, = ,' -e 's,",,g' -e '/= $/d' > "$AUDIT_DAEMON_CONFIG" ; then
+	if ! sed "${VAR_DIR_AUDIT}/auditd-conf.sh" -e '/^systemd_/d' -e 's,=, = ,' -e 's,",,g' -e '/= $/d' > "$AUDIT_DAEMON_CONFIG" ; then
 		error $"Error writing auditd config file %s" "$AUDIT_DAEMON_CONFIG"
 	fi
 	# auditd.service cannot be restarted, a reboot is required
