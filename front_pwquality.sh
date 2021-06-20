@@ -58,11 +58,11 @@ var="$(yad --title="linux-infosec-setupper: pwquality" --form \
 	--field=$"The maximum credit for having digits in the new password::LBL" "!" \
 	  --field=$"${_tag1}Value (dcredit)${_tag2}:NUM" "$dcredit!-9999..+9999!1" \
 	--field=$"The maximum credit for having uppercase characters in the new password::LBL" "!" \
-	  --field=$"${_tag1}Value (ucredit)${_tag2}:NUM" "$ucredir!-9999..+9999!1" \
+	  --field=$"${_tag1}Value (ucredit)${_tag2}:NUM" "$ucredit!-9999..+9999!1" \
 	--field=$"The maximum credit for having lowercase characters in the new password::LBL" "!" \
-	  --field=$"${_tag1}Value (lcredit)${_tag2}:NUM" "$lcredir!-9999..+9999!1" \
+	  --field=$"${_tag1}Value (lcredit)${_tag2}:NUM" "$lcredit!-9999..+9999!1" \
 	--field=$"The maximum credit for having other characters in the new password::LBL" "!" \
-	  --field=$"${_tag1}Value (ocredit)${_tag2}:NUM" "$ocredir!-9999..+9999!1" \
+	  --field=$"${_tag1}Value (ocredit)${_tag2}:NUM" "$ocredit!-9999..+9999!1" \
 	--field=$"The minimum number of required classes of characters for the new password::LBL" "!" \
 	  --field=$"${_tag1}Value (minclass)${_tag2}:NUM" "$minclass!0..9999!1" \
 	--field=$"The maximum number of allowed same consecutive charatcers in the new password::LBL" "!" \
