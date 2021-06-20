@@ -12,7 +12,7 @@ else
 	source "${SHARE_DIR_AUDIT}/back_auditd.sh"
 fi
 
-if ! [ -f "${VAR_DIR_AUDIT}/auditd-conf.sh}" ]; then
+if [ ! -f "${VAR_DIR_AUDIT}/auditd-conf.sh" ]; then
 	_mk_auditd_config || { _yad_error $"Unable to read file %s" "${VAR_DIR_AUDIT}/auditd-conf.sh"; exit 1; }
 fi
 
